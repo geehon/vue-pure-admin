@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { store } from "/@/store";
+import { isEqual } from "lodash-es";
 import { storageLocal } from "/@/utils/storage";
 import { multiType, positionType } from "./types";
 
@@ -54,25 +55,30 @@ export const useMultiTagsStore = defineStore({
         case "push":
           {
             const tagVal = value as multiType;
-            // 判断tag是否已存在:
+            const tagPath = tagVal?.path;
+            // 判断tag是否已存在
             const tagHasExits = this.multiTags.some(tag => {
-              return tag.path === tagVal?.path;
+              return tag.path === tagPath;
             });
 
-            if (tagHasExits) return;
-            const meta = tagVal?.meta;
-            const dynamicLevel = meta?.dynamicLevel ?? -1;
+            // 判断tag中的query键值是否相等
+            const tagQueryHasExits = this.multiTags.some(tag => {
+              return isEqual(tag.query, tagVal?.query);
+            });
+
+            if (tagHasExits && tagQueryHasExits) return;
+
+            const dynamicLevel = tagVal?.meta?.dynamicLevel ?? -1;
             if (dynamicLevel > 0) {
               // dynamicLevel动态路由可打开的数量
-              const realPath = meta?.realPath ?? "";
               // 获取到已经打开的动态路由数, 判断是否大于dynamicLevel
               if (
-                this.multiTags.filter(e => e.meta?.realPath ?? "" === realPath)
-                  .length >= dynamicLevel
+                this.multiTags.filter(e => e?.path === tagPath).length >=
+                dynamicLevel
               ) {
                 // 关闭第一个
                 const index = this.multiTags.findIndex(
-                  item => item.meta?.realPath === realPath
+                  item => item?.path === tagPath
                 );
                 index !== -1 && this.multiTags.splice(index, 1);
               }
@@ -85,10 +91,8 @@ export const useMultiTagsStore = defineStore({
           this.multiTags.splice(position?.startIndex, position?.length);
           this.tagsCache(this.multiTags);
           return this.multiTags;
-          break;
         case "slice":
           return this.multiTags.slice(-1);
-          break;
       }
     }
   }

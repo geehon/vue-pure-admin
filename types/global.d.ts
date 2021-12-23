@@ -68,6 +68,8 @@ declare global {
     VITE_PUBLIC_PATH: string;
     VITE_PROXY_DOMAIN: string;
     VITE_PROXY_DOMAIN_REAL: string;
+    VITE_ROUTER_HISTORY: string;
+    VITE_LEGACY: boolean;
   }
 
   declare interface ServerConfigs {
@@ -80,12 +82,12 @@ declare global {
     Locale?: string;
     Layout?: string;
     Theme?: string;
+    DarkMode?: boolean;
     Grey?: boolean;
     Weak?: boolean;
     HideTabs?: boolean;
     MapConfigure?: {
       amapKey?: string;
-      baiduKey?: string;
       options: {
         resizeEnable?: boolean;
         center?: number[];

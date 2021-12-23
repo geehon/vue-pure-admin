@@ -9,18 +9,18 @@ const activeName = ref("tag");
 
 function toDetail(index: number) {
   useMultiTagsStoreHook().handleTags("push", {
-    path: `/tabs/detail/${index}`,
+    path: `/tabs/detail`,
     parentPath: route.matched[0].path,
     name: "tabDetail",
+    query: { id: String(index) },
     meta: {
       title: { zh: `No.${index} - 详情信息`, en: `No.${index} - DetailInfo` },
       showLink: false,
       i18n: false,
-      dynamicLevel: 3,
-      realPath: "/tabs/detail"
+      dynamicLevel: 3
     }
   });
-  router.push(`/tabs/detail/${index}`);
+  router.push({ name: "tabDetail", query: { id: String(index) } });
 }
 </script>
 
