@@ -115,7 +115,14 @@ import {
   ArrowDown,
   Close,
   CloseBold,
-  Bell
+  Bell,
+  Guide,
+  User,
+  Iphone,
+  Location,
+  Tickets,
+  OfficeBuilding,
+  Notebook
 } from "@element-plus/icons-vue";
 
 // Icon
@@ -134,7 +141,14 @@ export const iconComponents = [
   ArrowDown,
   Close,
   CloseBold,
-  Bell
+  Bell,
+  Guide,
+  User,
+  Iphone,
+  Location,
+  Tickets,
+  OfficeBuilding,
+  Notebook
 ];
 
 export function useElementPlus(app: App) {

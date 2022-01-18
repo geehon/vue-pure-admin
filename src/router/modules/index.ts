@@ -1,6 +1,7 @@
 // 静态路由
 import homeRouter from "./home";
 import errorRouter from "./error";
+import guideRouter from "./guide";
 import editorRouter from "./editor";
 import nestedRouter from "./nested";
 import menuTreeRouter from "./menuTree";
@@ -20,6 +21,7 @@ import {
 const routes = [
   homeRouter,
   errorRouter,
+  guideRouter,
   nestedRouter,
   externalLink,
   editorRouter,
