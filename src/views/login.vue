@@ -5,14 +5,14 @@ import { initRouter } from "/@/router/utils";
 import { storageSession } from "/@/utils/storage";
 import { addClass, removeClass } from "/@/utils/operate";
 import bg from "/@/assets/login/bg.png";
-import avatar from "/@/assets/login/avatar.svg";
-import illustration0 from "/@/assets/login/illustration0.svg";
-import illustration1 from "/@/assets/login/illustration1.svg";
-import illustration2 from "/@/assets/login/illustration2.svg";
-import illustration3 from "/@/assets/login/illustration3.svg";
-import illustration4 from "/@/assets/login/illustration4.svg";
-import illustration5 from "/@/assets/login/illustration5.svg";
-import illustration6 from "/@/assets/login/illustration6.svg";
+import avatar from "/@/assets/login/avatar.svg?component";
+import illustration0 from "/@/assets/login/illustration0.svg?component";
+import illustration1 from "/@/assets/login/illustration1.svg?component";
+import illustration2 from "/@/assets/login/illustration2.svg?component";
+import illustration3 from "/@/assets/login/illustration3.svg?component";
+import illustration4 from "/@/assets/login/illustration4.svg?component";
+import illustration5 from "/@/assets/login/illustration5.svg?component";
+import illustration6 from "/@/assets/login/illustration6.svg?component";
 
 const router = useRouter();
 
@@ -110,7 +110,7 @@ function onPwdBlur() {
           }"
         >
           <div class="icon">
-            <i class="fa fa-user"></i>
+            <IconifyIconOffline icon="fa-user" width="14" height="14" />
           </div>
           <div>
             <h5>用户名</h5>
@@ -139,7 +139,7 @@ function onPwdBlur() {
           }"
         >
           <div class="icon">
-            <i class="fa fa-lock"></i>
+            <IconifyIconOffline icon="fa-lock" width="14" height="14" />
           </div>
           <div>
             <h5>密码</h5>

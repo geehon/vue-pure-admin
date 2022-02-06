@@ -7,10 +7,9 @@ const guideRouter = {
   component: Layout,
   redirect: "/guide/index",
   meta: {
-    icon: "Guide",
+    icon: "guide",
     title: $t("menus.hsguide"),
     i18n: true,
-    showLink: true,
     rank: 10
   },
   children: [
@@ -20,7 +19,6 @@ const guideRouter = {
       component: () => import("/@/views/guide/index.vue"),
       meta: {
         title: $t("menus.hsguide"),
-        showLink: true,
         i18n: true
       }
     }

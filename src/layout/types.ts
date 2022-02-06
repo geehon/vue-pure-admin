@@ -1,3 +1,4 @@
+import { Component } from "vue";
 export const routerArrays: Array<RouteConfigs> = [
   {
     path: "/welcome",
@@ -5,8 +6,7 @@ export const routerArrays: Array<RouteConfigs> = [
     meta: {
       title: "menus.hshome",
       i18n: true,
-      icon: "HomeFilled",
-      showLink: true
+      icon: "home-filled"
     }
   }
 ];
@@ -32,7 +32,7 @@ export type multiTagsType = {
 };
 
 export type tagsViewsType = {
-  icon: string;
+  icon: Component;
   text: string;
   divided: boolean;
   disabled: boolean;

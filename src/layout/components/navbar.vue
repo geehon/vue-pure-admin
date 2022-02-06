@@ -13,8 +13,8 @@ import { useAppStoreHook } from "/@/store/modules/app";
 import { unref, watch, getCurrentInstance } from "vue";
 import { deviceDetection } from "/@/utils/deviceDetection";
 import screenfull from "../components/screenfull/index.vue";
-import globalization from "/@/assets/svg/globalization.svg";
 import { useEpThemeStoreHook } from "/@/store/modules/epTheme";
+import globalization from "/@/assets/svg/globalization.svg?component";
 
 const instance =
   getCurrentInstance().appContext.config.globalProperties.$storage;
@@ -95,15 +95,17 @@ function translationEn() {
             <el-dropdown-item
               :style="getDropdownItemStyle('zh')"
               @click="translationCh"
-              ><el-icon class="check-zh" v-show="locale === 'zh'"
-                ><check /></el-icon
-              >简体中文</el-dropdown-item
+              ><IconifyIconOffline
+                class="check-zh"
+                v-show="locale === 'zh'"
+                icon="check"
+              />简体中文</el-dropdown-item
             >
             <el-dropdown-item
               :style="getDropdownItemStyle('en')"
               @click="translationEn"
               ><el-icon class="check-en" v-show="locale === 'en'"
-                ><check /></el-icon
+                ><IconifyIconOffline icon="check" /></el-icon
               >English</el-dropdown-item
             >
           </el-dropdown-menu>
@@ -118,8 +120,10 @@ function translationEn() {
         <template #dropdown>
           <el-dropdown-menu class="logout">
             <el-dropdown-item @click="logout">
-              <i class="ri-logout-circle-r-line"></i
-              >{{ $t("buttons.hsLoginOut") }}</el-dropdown-item
+              <IconifyIconOffline
+                icon="logout-circle-r-line"
+                style="margin: 5px"
+              />{{ $t("buttons.hsLoginOut") }}</el-dropdown-item
             >
           </el-dropdown-menu>
         </template>
@@ -129,7 +133,7 @@ function translationEn() {
         :title="$t('buttons.hssystemSet')"
         @click="onPanel"
       >
-        <Setting />
+        <IconifyIconOffline icon="setting" />
       </el-icon>
     </div>
   </div>

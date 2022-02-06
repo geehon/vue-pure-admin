@@ -16,9 +16,7 @@ import { useRouter } from "vue-router";
 import panel from "../panel/index.vue";
 import { emitter } from "/@/utils/mitt";
 import { templateRef } from "@vueuse/core";
-import dayIcon from "/@/assets/svg/day.svg";
 import { debounce } from "/@/utils/debounce";
-import darkIcon from "/@/assets/svg/dark.svg";
 import { themeColorsType } from "../../types";
 import { useAppStoreHook } from "/@/store/modules/app";
 import { shadeBgColor } from "../../theme/element-plus";
@@ -27,6 +25,9 @@ import { storageLocal, storageSession } from "/@/utils/storage";
 import { useMultiTagsStoreHook } from "/@/store/modules/multiTags";
 import { createNewStyle, writeNewStyle } from "../../theme/element-plus";
 import { toggleTheme } from "@zougt/vite-plugin-theme-preprocessor/dist/browser-utils";
+
+import dayIcon from "/@/assets/svg/day.svg?component";
+import darkIcon from "/@/assets/svg/dark.svg?component";
 
 const router = useRouter();
 const { isSelect } = useCssModule();
@@ -155,9 +156,8 @@ function onReset() {
       parentPath: "/",
       meta: {
         title: "menus.hshome",
-        icon: "HomeFilled",
-        i18n: true,
-        showLink: true
+        icon: "home-filled",
+        i18n: true
       }
     }
   ]);
@@ -351,7 +351,7 @@ nextTick(() => {
           :size="17"
           :color="getThemeColor(item.themeColor)"
         >
-          <Check />
+          <IconifyIconOffline icon="check" />
         </el-icon>
       </li>
     </ul>
@@ -436,7 +436,12 @@ nextTick(() => {
       style="width: 90%; margin: 24px 15px"
       @click="onReset"
     >
-      <i class="fa fa-sign-out"></i>
+      <IconifyIconOffline
+        icon="fa-sign-out"
+        width="15"
+        height="15"
+        style="margin-right: 4px"
+      />
       清空缓存并返回登录页</el-button
     >
   </panel>

@@ -7,9 +7,8 @@ const flowChartRouter = {
   component: Layout,
   redirect: "/flowChart/index",
   meta: {
-    icon: "SetUp",
+    icon: "set-up",
     title: $t("menus.hsflowChart"),
-    showLink: true,
     i18n: true,
     rank: 1
   },
@@ -20,8 +19,7 @@ const flowChartRouter = {
       component: () => import("/@/views/flow-chart/index.vue"),
       meta: {
         title: $t("menus.hsflowChart"),
-        i18n: true,
-        showLink: true
+        i18n: true
       }
     }
   ]

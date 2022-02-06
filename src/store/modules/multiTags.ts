@@ -16,9 +16,8 @@ export const useMultiTagsStore = defineStore({
             parentPath: "/",
             meta: {
               title: "menus.hshome",
-              icon: "HomeFilled",
-              i18n: true,
-              showLink: true
+              icon: "home-filled",
+              i18n: true
             }
           }
         ],

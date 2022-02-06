@@ -7,9 +7,8 @@ const homeRouter = {
   component: Layout,
   redirect: "/welcome",
   meta: {
-    icon: "HomeFilled",
+    icon: "home-filled",
     title: $t("menus.hshome"),
-    showLink: true,
     i18n: true,
     rank: 0
   },
@@ -20,8 +19,7 @@ const homeRouter = {
       component: () => import("/@/views/welcome.vue"),
       meta: {
         title: $t("menus.hshome"),
-        i18n: true,
-        showLink: true
+        i18n: true
       }
     }
   ]
