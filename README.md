@@ -25,7 +25,7 @@ vue-pure-admin 是一个免费开源的中后台模版。使用了最新的`vue3
 
 ## 预览
 
-- [vue-pure-admin](http://yiming_chang.gitee.io/manages)
+- [vue-pure-admin](https://vue-pure-admin.vercel.app)
 
 <p align="center">
   <img alt="PureAdmin Logo" width="100%" src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b4857fc7eb7d4c0f8deeefc644c1f7dd~tplv-k3u1fbpfcp-watermark.awebp?">
@@ -46,7 +46,7 @@ vue-pure-admin 是一个免费开源的中后台模版。使用了最新的`vue3
 ```bash
 git clone https://github.com/xiaoxian521/vue-pure-admin.git
 or
-git clone https://github.com.cnpmjs.org/xiaoxian521/vue-pure-admin.git
+git clone https://gitee.com/yiming_chang/vue-pure-admin.git
 ```
 
 - 安装依赖
@@ -122,30 +122,30 @@ pnpm build
 
 如果你觉得这个项目对你有帮助，你可以帮作者买一杯咖啡表示支持
 
-<img src="http://yiming_chang.gitee.io/manages/pay.jpg" width="150px" height="150px" />
+<img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/336d9c5851ed40ba8224316ad0f96938~tplv-k3u1fbpfcp-watermark.awebp?" width="150px" height="150px" />
 
-## 微信交流群
+## QQ 交流群
 
-为了项目更好的发展，你可选择捐赠 10 元后添加下图微信拉你进群，添加后请自觉发捐赠截图
+群里严禁`黄`、`赌`、`毒`、`vpn`等违法行为！
 
-<img src="http://yiming_chang.gitee.io/manages/kf.jpg" width="150px" height="195px" />
+<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f0697596aec84661b724f6eebdf8db17~tplv-k3u1fbpfcp-watermark.awebp?" width="150px" height="225px" />
 
 ## 许可证
 
-原则上不收取任何费用及版权，可以放心使用
+原则上不收取任何费用及版权，可以放心使用，不过如需二次开源（比如用此平台二次开发并开源）请联系作者获取许可！
 
 [MIT © xiaoxian521-2020](./LICENSE)
 
 ## 捐赠者
 
-非常感谢你们的支持，相信项目会越来越好！！！:heart:
+非常感谢你们的支持，相信项目会越来越好 :heart:
 
-|                                                                xueyuheng                                                                 |                                                                taolei1990                                                                 |                                                                hang-kim                                                                 |                                                               madwolfcrazy                                                                |                                                                limuen                                                                 |
-| :--------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------: |
-| <a href="https://github.com/xueyuheng"><img src="https://avatars.githubusercontent.com/u/48202935?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/taolei1990"><img src="https://avatars.githubusercontent.com/u/23173640?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/hang-kim"><img src="https://avatars.githubusercontent.com/u/52914259?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/madwolfcrazy"><img src="https://avatars.githubusercontent.com/u/223671?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/limuen"><img src="https://avatars.githubusercontent.com/u/31790606?v=4" width="60px" height="60px" /></a> |
+|                                                                xueyuheng                                                                 |                                                                taolei1990                                                                 |                                                                hang-kim                                                                 |                                                               madwolfcrazy                                                                |                                                                limuen                                                                 |                                                                BenLakes                                                                 |
+| :--------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: |
+| <a href="https://github.com/xueyuheng"><img src="https://avatars.githubusercontent.com/u/48202935?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/taolei1990"><img src="https://avatars.githubusercontent.com/u/23173640?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/hang-kim"><img src="https://avatars.githubusercontent.com/u/52914259?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/madwolfcrazy"><img src="https://avatars.githubusercontent.com/u/223671?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/limuen"><img src="https://avatars.githubusercontent.com/u/31790606?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/BenLakes"><img src="https://avatars.githubusercontent.com/u/15206046?v=4" width="60px" height="60px" /></a> |
 
 ## 贡献者
 
-这个项目的存在感谢所有做出贡献的人！！！:heart:
+这个项目的存在感谢所有做出贡献的人 :heart:
 
 <a href="https://github.com/xiaoxian521/vue-pure-admin/graphs/contributors"><img src="https://contrib.rocks/image?repo=xiaoxian521/vue-pure-admin" /></a>

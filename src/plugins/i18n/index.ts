@@ -1,6 +1,6 @@
 // 多组件库的国际化和本地项目国际化兼容
 import { App } from "vue";
-import { set } from "lodash-es";
+import { set } from "lodash-unified";
 import { createI18n } from "vue-i18n";
 import { localesConfigs } from "./config";
 import { storageLocal } from "/@/utils/storage";
@@ -11,7 +11,10 @@ import { storageLocal } from "/@/utils/storage";
  * @param isI18n  如果true,获取对应的消息,否则返回本身
  * @returns message
  */
-export function transformI18n(message: string | object = "", isI18n = false) {
+export function transformI18n(
+  message: string | unknown | object = "",
+  isI18n: boolean | unknown = false
+) {
   if (!message) {
     return "";
   }

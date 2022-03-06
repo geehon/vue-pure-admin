@@ -41,7 +41,7 @@ const permissionRouter = {
     title: "menus.permission",
     icon: "lollipop",
     i18n: true,
-    rank: 3
+    rank: 7
   },
   children: [
     {
@@ -64,6 +64,46 @@ const permissionRouter = {
   ]
 };
 
+const frameRouter = {
+  path: "/iframe",
+  name: "reFrame",
+  redirect: "/iframe/pure",
+  meta: {
+    icon: "monitor",
+    title: "menus.hsExternalPage",
+    i18n: true,
+    rank: 10
+  },
+  children: [
+    {
+      path: "/iframe/pure",
+      name: "reFramePure",
+      meta: {
+        i18n: true,
+        title: "menus.hsPureDocument",
+        frameSrc: "https://pure-admin-doc.vercel.app"
+      }
+    },
+    {
+      path: "/external",
+      name: "https://pure-admin-doc.vercel.app",
+      meta: {
+        title: "menus.externalLink",
+        i18n: true
+      }
+    },
+    {
+      path: "/iframe/ep",
+      name: "reFrameEp",
+      meta: {
+        i18n: true,
+        title: "menus.hsEpDocument",
+        frameSrc: "https://element-plus.gitee.io/zh-CN/"
+      }
+    }
+  ]
+};
+
 const tabsRouter = {
   path: "/tabs",
   name: "reTabs",
@@ -72,7 +112,7 @@ const tabsRouter = {
     icon: "IF-team-icontabs",
     title: "menus.hstabs",
     i18n: true,
-    rank: 8
+    rank: 12
   },
   children: [
     {
@@ -113,6 +153,7 @@ export default [
           code: 0,
           info: [
             tabsRouter,
+            frameRouter,
             systemRouter,
             setDifAuthority("v-admin", permissionRouter)
           ]

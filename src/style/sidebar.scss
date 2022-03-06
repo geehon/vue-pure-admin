@@ -23,16 +23,6 @@
     margin-left: $sideBarWidth;
     position: relative;
     background: #f0f2f5;
-    @media screen and (min-width: 150px) and (max-width: 420px) {
-      .app-main .el-scrollbar__view:first-child {
-        overflow-y: hidden;
-      }
-    }
-    @media screen and (min-width: 420px) {
-      .app-main .el-scrollbar__view:first-child {
-        overflow: hidden;
-      }
-    }
   }
 
   .fixed-header {
@@ -502,9 +492,7 @@
     background-color: $menuActiveBefore;
     content: "";
     clear: both;
-    -webkit-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
-    -webkit-transform: translateY(0);
     transform: translateY(0);
   }
 
@@ -517,9 +505,7 @@
     background-color: $menuActiveBefore;
     content: "";
     clear: both;
-    -webkit-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
-    -webkit-transform: translateY(0);
     transform: translateY(0);
   }
 
@@ -530,7 +516,6 @@
     position: absolute;
     height: 0;
     width: 3px;
-    -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
     top: 50%;
   }
@@ -641,5 +626,66 @@ body[layout="horizontal"] {
   .fixed-header {
     width: 100%;
     transition: none !important;
+  }
+}
+
+body[layout="mix"] {
+  $sideBarWidth: 210px;
+  @include merge-style($sideBarWidth);
+
+  .el-menu {
+    --el-menu-hover-bg-color: transparent !important;
+  }
+
+  .hideSidebar {
+    .fixed-header {
+      width: calc(100% - 54px);
+      transition: width 0.28s;
+    }
+
+    .sidebar-container {
+      width: 54px !important;
+    }
+
+    .main-container {
+      margin-left: 54px;
+    }
+
+    .submenu-title-noDropdown {
+      padding: 0 !important;
+      position: relative;
+
+      .el-tooltip {
+        padding: 0 !important;
+      }
+    }
+
+    /* 菜单折叠 */
+    .el-menu--collapse {
+      .el-sub-menu {
+        & > .el-sub-menu__title {
+          & > span {
+            height: 0;
+            width: 0;
+            overflow: hidden;
+            visibility: hidden;
+            display: inline-block;
+          }
+        }
+      }
+
+      /* 无子菜单 */
+      .el-menu-item [class^="el-icon"] {
+        right: 5px;
+      }
+
+      .el-sub-menu__title [class^="el-icon"] {
+        right: 2px;
+      }
+
+      .submenu-title-noDropdown {
+        background: transparent !important;
+      }
+    }
   }
 }

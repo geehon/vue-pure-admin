@@ -8,10 +8,12 @@ import {
 } from "vue-router";
 import { router } from "./index";
 import { loadEnv } from "../../build";
-import Layout from "/@/layout/index.vue";
 import { useTimeoutFn } from "@vueuse/core";
 import { RouteConfigs } from "/@/layout/types";
+import { buildHierarchyTree } from "/@/utils/tree";
 import { usePermissionStoreHook } from "/@/store/modules/permission";
+const Layout = () => import("/@/layout/index.vue");
+const IFrame = () => import("/@/layout/frameView.vue");
 // https://cn.vitejs.dev/guide/features.html#glob-import
 const modulesRoutes = import.meta.glob("/src/views/**/*.{vue,tsx}");
 
@@ -125,6 +127,10 @@ function initRouter(name: string) {
               // 最终路由进行升序
               ascending(router.options.routes[0].children);
               if (!router.hasRoute(v?.name)) router.addRoute(v);
+              const flattenRouters = router
+                .getRoutes()
+                .find(n => n.path === "/");
+              router.addRoute(flattenRouters);
             }
             resolve(router);
           }
@@ -146,14 +152,15 @@ function initRouter(name: string) {
  */
 function formatFlatteningRoutes(routesList: RouteRecordRaw[]) {
   if (routesList.length === 0) return routesList;
-  for (let i = 0; i < routesList.length; i++) {
-    if (routesList[i].children) {
-      routesList = routesList
+  let hierarchyList = buildHierarchyTree(routesList);
+  for (let i = 0; i < hierarchyList.length; i++) {
+    if (hierarchyList[i].children) {
+      hierarchyList = hierarchyList
         .slice(0, i + 1)
-        .concat(routesList[i].children, routesList.slice(i + 1));
+        .concat(hierarchyList[i].children, hierarchyList.slice(i + 1));
     }
   }
-  return routesList;
+  return hierarchyList;
 }
 
 /**
@@ -216,6 +223,8 @@ function addAsyncRoutes(arrRoutes: Array<RouteRecordRaw>) {
   arrRoutes.forEach((v: RouteRecordRaw) => {
     if (v.redirect) {
       v.component = Layout;
+    } else if (v.meta?.frameSrc) {
+      v.component = IFrame;
     } else {
       const index = modulesRoutesKeys.findIndex(ev => ev.includes(v.path));
       v.component = modulesRoutes[modulesRoutesKeys[index]];

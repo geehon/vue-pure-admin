@@ -25,7 +25,7 @@ vue-pure-admin is a free and open source middle and back-end template. Using the
 
 ## Preview
 
-- [vue-pure-admin](http://yiming_chang.gitee.io/manages)
+- [vue-pure-admin](https://vue-pure-admin.vercel.app)
 
 <p align="center">
   <img alt="PureAdmin Logo" width="100%" src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b4857fc7eb7d4c0f8deeefc644c1f7dd~tplv-k3u1fbpfcp-watermark.awebp?">
@@ -46,7 +46,7 @@ Open the project in Gitpod (free online dev environment for GitHub) and start co
 ```bash
 git clone https://github.com/xiaoxian521/vue-pure-admin.git
 or
-git clone https://github.com.cnpmjs.org/xiaoxian521/vue-pure-admin.git
+git clone https://gitee.com/yiming_chang/vue-pure-admin.git
 ```
 
 - Installation dependencies
@@ -124,28 +124,22 @@ If you think this project is helpful to you, you can help the author buy a cup o
 
 <img src="http://yiming_chang.gitee.io/manages/pay.jpg" width="150px" height="150px" />
 
-## WeChat Exchange Group
-
-For the better development of the project, you can choose to donate 10 yuan and add the following WeChat to pull you into the group. After adding, please consciously send a screenshot of the donation
-
-<img src="http://yiming_chang.gitee.io/manages/kf.jpg" width="150px" height="195px" />
-
 ## License
 
-In principle, no fees and copyrights are charged, so you can use it with confidence
+In principle, no fees and copyrights are charged, and you can use it with confidence, but if you need secondary open source, please contact the author for permission!
 
 [MIT © xiaoxian521-2020](./LICENSE)
 
 ## Backers
 
-Thank you very much for your support, I believe the project will get better and better! ! ! :heart:
+Thank you very much for your support, I believe the project will get better and better :heart:
 
-|                                                                xueyuheng                                                                 |                                                                taolei1990                                                                 |                                                                hang-kim                                                                 |                                                               madwolfcrazy                                                                |                                                                limuen                                                                 |
-| :--------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------: |
-| <a href="https://github.com/xueyuheng"><img src="https://avatars.githubusercontent.com/u/48202935?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/taolei1990"><img src="https://avatars.githubusercontent.com/u/23173640?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/hang-kim"><img src="https://avatars.githubusercontent.com/u/52914259?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/madwolfcrazy"><img src="https://avatars.githubusercontent.com/u/223671?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/limuen"><img src="https://avatars.githubusercontent.com/u/31790606?v=4" width="60px" height="60px" /></a> |
+|                                                                xueyuheng                                                                 |                                                                taolei1990                                                                 |                                                                hang-kim                                                                 |                                                               madwolfcrazy                                                                |                                                                limuen                                                                 |                                                                BenLakes                                                                 |
+| :--------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: |
+| <a href="https://github.com/xueyuheng"><img src="https://avatars.githubusercontent.com/u/48202935?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/taolei1990"><img src="https://avatars.githubusercontent.com/u/23173640?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/hang-kim"><img src="https://avatars.githubusercontent.com/u/52914259?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/madwolfcrazy"><img src="https://avatars.githubusercontent.com/u/223671?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/limuen"><img src="https://avatars.githubusercontent.com/u/31790606?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/BenLakes"><img src="https://avatars.githubusercontent.com/u/15206046?v=4" width="60px" height="60px" /></a> |
 
 ## Contributors
 
-This project exists thanks to all the people who contribute!!! :heart:
+This project exists thanks to all the people who contribute :heart:
 
 <a href="https://github.com/xiaoxian521/vue-pure-admin/graphs/contributors"><img src="https://contrib.rocks/image?repo=xiaoxian521/vue-pure-admin" /></a>

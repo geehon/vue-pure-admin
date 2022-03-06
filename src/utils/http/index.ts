@@ -3,7 +3,7 @@ import {
   resultType,
   PureHttpError,
   RequestMethods,
-  PureHttpResoponse,
+  PureHttpResponse,
   PureHttpRequestConfig
 } from "./types.d";
 import qs from "qs";
@@ -91,7 +91,7 @@ class PureHttp {
   private httpInterceptorsResponse(): void {
     const instance = PureHttp.axiosInstance;
     instance.interceptors.response.use(
-      (response: PureHttpResoponse) => {
+      (response: PureHttpResponse) => {
         const $config = response.config;
         // 关闭进度条动画
         NProgress.done();
@@ -145,21 +145,21 @@ class PureHttp {
   }
 
   // 单独抽离的post工具函数
-  public post<T>(
+  public post<T, P>(
     url: string,
     params?: T,
     config?: PureHttpRequestConfig
-  ): Promise<T> {
-    return this.request<T>("post", url, params, config);
+  ): Promise<P> {
+    return this.request<P>("post", url, params, config);
   }
 
   // 单独抽离的get工具函数
-  public get<T>(
+  public get<T, P>(
     url: string,
     params?: T,
     config?: PureHttpRequestConfig
-  ): Promise<T> {
-    return this.request<T>("get", url, params, config);
+  ): Promise<P> {
+    return this.request<P>("get", url, params, config);
   }
 }
 
