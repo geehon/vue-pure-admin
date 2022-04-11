@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref, PropType, nextTick, computed, CSSProperties } from "vue";
 import path from "path";
 import { useNav } from "../../hooks/nav";
 import { childrenType } from "../../types";
 import { transformI18n } from "/@/plugins/i18n";
 import { useAppStoreHook } from "/@/store/modules/app";
 import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
+import { ref, PropType, nextTick, computed, CSSProperties } from "vue";
 
 const { pureApp } = useNav();
 const menuMode = ["vertical", "mix"].includes(pureApp.layout);
@@ -148,7 +148,7 @@ function resolvePath(routePath) {
       :class="{ 'submenu-title-noDropdown': !isNest }"
       :style="getNoDropdownStyle"
     >
-      <el-icon v-show="props.item.meta.icon">
+      <div class="el-icon" v-show="props.item.meta.icon">
         <component
           :is="
             useRenderIcon(
@@ -156,8 +156,8 @@ function resolvePath(routePath) {
                 (props.item.meta && props.item.meta.icon)
             )
           "
-        ></component>
-      </el-icon>
+        />
+      </div>
       <div
         v-if="
           !pureApp.sidebar.opened &&
@@ -203,7 +203,7 @@ function resolvePath(routePath) {
             :style="getExtraIconStyle"
             :icon="onlyOneChild.meta.extraIcon.name"
             :svg="onlyOneChild.meta.extraIcon.svg ? true : false"
-          ></FontIcon>
+          />
         </div>
       </template>
     </el-menu-item>
@@ -216,11 +216,14 @@ function resolvePath(routePath) {
     popper-append-to-body
   >
     <template #title>
-      <el-icon v-show="props.item.meta.icon" :class="props.item.meta.icon">
+      <div
+        v-show="props.item.meta.icon"
+        :class="['el-icon', props.item.meta.icon]"
+      >
         <component
           :is="useRenderIcon(props.item.meta && props.item.meta.icon)"
-        ></component>
-      </el-icon>
+        />
+      </div>
       <span v-if="!menuMode">{{
         transformI18n(props.item.meta.title, props.item.meta.i18n)
       }}</span>
@@ -250,7 +253,7 @@ function resolvePath(routePath) {
         style="position: absolute; right: 10px"
         :icon="props.item.meta.extraIcon.name"
         :svg="props.item.meta.extraIcon.svg ? true : false"
-      ></FontIcon>
+      />
     </template>
     <sidebar-item
       v-for="child in props.item.children"

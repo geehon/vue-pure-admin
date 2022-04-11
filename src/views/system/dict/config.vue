@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { reactive } from "vue";
+import { useI18n } from "vue-i18n";
 import { VxeTableEvents } from "vxe-table";
 import { templateRef } from "@vueuse/core";
 
@@ -18,6 +19,8 @@ withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   (e: "handleClose"): void;
 }>();
+
+const { t } = useI18n();
 
 const xTable = templateRef<any>("xTable", null);
 
@@ -84,7 +87,7 @@ const checkboxChangeEvent: VxeTableEvents.CheckboxChange = ({ records }) => {
       destroy-on-close
       size="640px"
     >
-      <el-divider></el-divider>
+      <el-divider />
       <!-- 列表 -->
       <div class="list">
         <vxe-table
@@ -94,9 +97,9 @@ const checkboxChangeEvent: VxeTableEvents.CheckboxChange = ({ records }) => {
           @checkbox-change="checkboxChangeEvent"
           @checkbox-all="checkboxChangeEvent"
         >
-          <vxe-table-column type="checkbox" width="60"></vxe-table-column>
-          <vxe-table-column field="name" title="名称"></vxe-table-column>
-          <vxe-table-column field="dataval" title="数据值"></vxe-table-column>
+          <vxe-table-column type="checkbox" width="60" />
+          <vxe-table-column field="name" title="名称" />
+          <vxe-table-column field="dataval" title="数据值" />
           <vxe-table-column title="操作" fixed="right">
             <template #default="{ row }">
               <vxe-button
@@ -136,11 +139,11 @@ const checkboxChangeEvent: VxeTableEvents.CheckboxChange = ({ records }) => {
                 v-model="configData.isAllChecked"
                 :indeterminate="configData.isIndeterminate"
                 @change="changeAllEvent"
-              ></vxe-checkbox>
+              />
               <span class="select-count"
                 >已选中{{ configData.selectRecords.length }}条</span
               >
-              <vxe-button size="small">{{ $t("buttons.hsdelete") }}</vxe-button>
+              <vxe-button size="small">{{ t("buttons.hsdelete") }}</vxe-button>
             </span>
           </template>
         </vxe-pager>

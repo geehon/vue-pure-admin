@@ -9,7 +9,6 @@ import {
   useCssModule,
   getCurrentInstance
 } from "vue";
-import rgbHex from "rgb-hex";
 import { find } from "lodash-unified";
 import { getConfig } from "/@/config";
 import { useRouter } from "vue-router";
@@ -24,7 +23,7 @@ import { useEpThemeStoreHook } from "/@/store/modules/epTheme";
 import { storageLocal, storageSession } from "/@/utils/storage";
 import { useMultiTagsStoreHook } from "/@/store/modules/multiTags";
 import { createNewStyle, writeNewStyle } from "../../theme/element-plus";
-import { toggleTheme } from "@zougt/vite-plugin-theme-preprocessor/dist/browser-utils";
+import { toggleTheme } from "@pureadmin/theme/dist/browser-utils";
 
 import dayIcon from "/@/assets/svg/day.svg?component";
 import darkIcon from "/@/assets/svg/dark.svg?component";
@@ -40,23 +39,23 @@ const instanceConfig =
 
 let themeColors = ref<Array<themeColorsType>>([
   // 道奇蓝（默认）
-  { rgb: "27, 42, 71", themeColor: "default" },
+  { color: "#1b2a47", themeColor: "default" },
   // 亮白色
-  { rgb: "255, 255, 255", themeColor: "light" },
+  { color: "#ffffff", themeColor: "light" },
   // 猩红色
-  { rgb: "245, 34, 45", themeColor: "dusk" },
+  { color: "#f5222d", themeColor: "dusk" },
   // 橙红色
-  { rgb: "250, 84, 28", themeColor: "volcano" },
+  { color: "#fa541c", themeColor: "volcano" },
   // 金色
-  { rgb: "250, 219, 20", themeColor: "yellow" },
+  { color: "#fadb14", themeColor: "yellow" },
   // 绿宝石
-  { rgb: "19, 194, 194", themeColor: "mingQing" },
+  { color: "#13c2c2", themeColor: "mingQing" },
   // 酸橙绿
-  { rgb: "82, 196, 26", themeColor: "auroraGreen" },
+  { color: "#52c41a", themeColor: "auroraGreen" },
   // 深粉色
-  { rgb: "235, 47, 150", themeColor: "pink" },
+  { color: "#eb2f96", themeColor: "pink" },
   // 深紫罗兰色
-  { rgb: "114, 46, 209", themeColor: "saucePurple" }
+  { color: "#722ed1", themeColor: "saucePurple" }
 ]);
 
 const verticalRef = templateRef<HTMLElement | null>("verticalRef", null);
@@ -97,8 +96,8 @@ const settings = reactive({
 });
 
 const getThemeColorStyle = computed(() => {
-  return rgb => {
-    return { background: `rgb(${rgb})` };
+  return color => {
+    return { background: color };
   };
 });
 
@@ -261,13 +260,13 @@ function setLayoutThemeColor(theme: string) {
     setEpThemeColor(getConfig().EpThemeColor);
   } else {
     const colors = find(themeColors.value, { themeColor: theme });
-    const color = "#" + rgbHex(colors.rgb);
-    setEpThemeColor(color);
+    setEpThemeColor(colors.color);
   }
 }
 
 // 设置ep主题色
 const setEpThemeColor = (color: string) => {
+  // @ts-expect-error
   writeNewStyle(createNewStyle(color));
   useEpThemeStoreHook().setEpThemeColor(color);
   body.style.setProperty("--el-color-primary-active", shadeBgColor(color));
@@ -300,7 +299,7 @@ nextTick(() => {
   settings.weakVal &&
     document.querySelector("html")?.setAttribute("class", "html-weakness");
   settings.tabsVal && tagsChange();
-
+  // @ts-expect-error
   writeNewStyle(createNewStyle(epThemeColor.value));
   dataThemeChange();
 });
@@ -316,8 +315,7 @@ nextTick(() => {
       :active-icon="dayIcon"
       :inactive-icon="darkIcon"
       @change="dataThemeChange"
-    >
-    </el-switch>
+    />
 
     <el-divider>导航栏模式</el-divider>
     <ul class="pure-theme">
@@ -327,8 +325,8 @@ nextTick(() => {
           ref="verticalRef"
           @click="setLayoutModel('vertical')"
         >
-          <div></div>
-          <div></div>
+          <div />
+          <div />
         </li>
       </el-tooltip>
 
@@ -338,8 +336,8 @@ nextTick(() => {
           ref="horizontalRef"
           @click="setLayoutModel('horizontal')"
         >
-          <div></div>
-          <div></div>
+          <div />
+          <div />
         </li>
       </el-tooltip>
 
@@ -349,8 +347,8 @@ nextTick(() => {
           ref="mixRef"
           @click="setLayoutModel('mix')"
         >
-          <div></div>
-          <div></div>
+          <div />
+          <div />
         </li>
       </el-tooltip>
     </ul>
@@ -360,7 +358,7 @@ nextTick(() => {
       <li
         v-for="(item, index) in themeColors"
         :key="index"
-        :style="getThemeColorStyle(item.rgb)"
+        :style="getThemeColorStyle(item.color)"
         @click="setLayoutThemeColor(item.themeColor)"
       >
         <el-icon
@@ -384,8 +382,7 @@ nextTick(() => {
           active-text="开"
           inactive-text="关"
           @change="greyChange"
-        >
-        </el-switch>
+        />
       </li>
       <li v-show="!dataTheme">
         <span>色弱模式</span>
@@ -396,8 +393,7 @@ nextTick(() => {
           active-text="开"
           inactive-text="关"
           @change="weekChange"
-        >
-        </el-switch>
+        />
       </li>
       <li>
         <span>隐藏标签页</span>
@@ -408,8 +404,7 @@ nextTick(() => {
           active-text="开"
           inactive-text="关"
           @change="tagsChange"
-        >
-        </el-switch>
+        />
       </li>
       <li>
         <span>侧边栏Logo</span>
@@ -422,8 +417,7 @@ nextTick(() => {
           active-text="开"
           inactive-text="关"
           @change="logoChange"
-        >
-        </el-switch>
+        />
       </li>
       <li>
         <span>标签页持久化</span>
@@ -434,8 +428,7 @@ nextTick(() => {
           active-text="开"
           inactive-text="关"
           @change="multiTagsCacheChange"
-        >
-        </el-switch>
+        />
       </li>
 
       <li>

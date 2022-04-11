@@ -1,18 +1,20 @@
 import { computed } from "vue";
 import { router } from "/@/router";
+import { getConfig } from "/@/config";
 import { emitter } from "/@/utils/mitt";
 import { routeMetaType } from "../types";
+import { remainingPaths } from "/@/router";
 import { transformI18n } from "/@/plugins/i18n";
 import { storageSession } from "/@/utils/storage";
 import { useAppStoreHook } from "/@/store/modules/app";
-import { remainingPaths } from "/@/router/modules/index";
-import { Title } from "../../../public/serverConfig.json";
 import { useEpThemeStoreHook } from "/@/store/modules/epTheme";
+
+const errorInfo = "当前路由配置不正确，请检查配置";
 
 export function useNav() {
   const pureApp = useAppStoreHook();
   // 用户名
-  const usename: string = storageSession.getItem("info")?.username;
+  const username: string = storageSession.getItem("info")?.username;
 
   // 设置国际化选中后的样式
   const getDropdownItemStyle = computed(() => {
@@ -30,6 +32,7 @@ export function useNav() {
 
   // 动态title
   function changeTitle(meta: routeMetaType) {
+    const Title = getConfig().Title;
     if (Title)
       document.title = `${transformI18n(meta.title, meta.i18n)} | ${Title}`;
     else document.title = transformI18n(meta.title, meta.i18n);
@@ -58,6 +61,7 @@ export function useNav() {
   }
 
   function resolvePath(route) {
+    if (!route.children) return console.error(errorInfo);
     const httpReg = /^http(s?):\/\//;
     const routeChildPath = route.children[0]?.path;
     if (httpReg.test(routeChildPath)) {
@@ -76,6 +80,7 @@ export function useNav() {
     }
     // 找到当前路由的信息
     function findCurrentRoute(indexPath: string, routes) {
+      if (!routes) return console.error(errorInfo);
       return routes.map(item => {
         if (item.path === indexPath) {
           if (item.redirect) {
@@ -111,7 +116,7 @@ export function useNav() {
     resolvePath,
     isCollapse,
     pureApp,
-    usename,
+    username,
     getDropdownItemStyle
   };
 }

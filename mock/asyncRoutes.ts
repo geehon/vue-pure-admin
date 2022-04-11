@@ -4,30 +4,48 @@ import { MockMethod } from "vite-plugin-mock";
 // http://mockjs.com/examples.html#Object
 const systemRouter = {
   path: "/system",
-  name: "system",
   redirect: "/system/user/index",
   meta: {
     icon: "setting",
     title: "menus.hssysManagement",
     i18n: true,
-    rank: 6
+    rank: 11
   },
   children: [
+    // {
+    //   path: "/system/dict/index",
+    //   name: "dict",
+    //   meta: {
+    //     title: "menus.hsDict",
+    //     i18n: true,
+    //     keepAlive: true
+    //   }
+    // },
     {
       path: "/system/user/index",
       name: "user",
       meta: {
-        title: "menus.hsBaseinfo",
+        icon: "flUser",
+        title: "menus.hsUser",
         i18n: true
       }
     },
     {
-      path: "/system/dict/index",
-      name: "dict",
+      path: "/system/role/index",
+      name: "role",
       meta: {
-        title: "menus.hsDict",
-        i18n: true,
-        keepAlive: true
+        icon: "peoples",
+        title: "menus.hsRole",
+        i18n: true
+      }
+    },
+    {
+      path: "/system/dept/index",
+      name: "dept",
+      meta: {
+        icon: "office-building",
+        title: "menus.hsDept",
+        i18n: true
       }
     }
   ]
@@ -35,7 +53,6 @@ const systemRouter = {
 
 const permissionRouter = {
   path: "/permission",
-  name: "permission",
   redirect: "/permission/page/index",
   meta: {
     title: "menus.permission",
@@ -66,7 +83,6 @@ const permissionRouter = {
 
 const frameRouter = {
   path: "/iframe",
-  name: "reFrame",
   redirect: "/iframe/pure",
   meta: {
     icon: "monitor",
@@ -106,7 +122,6 @@ const frameRouter = {
 
 const tabsRouter = {
   path: "/tabs",
-  name: "reTabs",
   redirect: "/tabs/index",
   meta: {
     icon: "IF-team-icontabs",

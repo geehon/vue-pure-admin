@@ -27,6 +27,8 @@ import Notebook from "@iconify-icons/ep/notebook";
 import Rank from "@iconify-icons/ep/rank";
 import videoPlay from "@iconify-icons/ep/video-play";
 import Monitor from "@iconify-icons/ep/monitor";
+import Search from "@iconify-icons/ep/search";
+import Refresh from "@iconify-icons/ep/refresh";
 addIcon("check", Check);
 addIcon("menu", Menu);
 addIcon("home-filled", HomeFilled);
@@ -52,6 +54,8 @@ addIcon("notebook", Notebook);
 addIcon("video-play", videoPlay);
 addIcon("rank", Rank);
 addIcon("monitor", Monitor);
+addIcon("search", Search);
+addIcon("refresh", Refresh);
 
 // remixicon
 import arrowRightSLine from "@iconify-icons/ri/arrow-right-s-line";
@@ -63,6 +67,10 @@ import questionLine from "@iconify-icons/ri/question-line";
 import checkboxCircleLine from "@iconify-icons/ri/checkbox-circle-line";
 import informationLine from "@iconify-icons/ri/information-line";
 import closeCircleLine from "@iconify-icons/ri/close-circle-line";
+import arrowUpLine from "@iconify-icons/ri/arrow-up-line";
+import arrowDownLine from "@iconify-icons/ri/arrow-down-line";
+import bookmark2Line from "@iconify-icons/ri/bookmark-2-line";
+import addFill from "@iconify-icons/ri/add-circle-line";
 addIcon("arrow-right-s-line", arrowRightSLine);
 addIcon("arrow-left-s-line", arrowLeftSLine);
 addIcon("logout-circle-r-line", logoutCircleRLine);
@@ -72,6 +80,10 @@ addIcon("question-line", questionLine);
 addIcon("checkbox-circle-line", checkboxCircleLine);
 addIcon("information-line", informationLine);
 addIcon("close-circle-line", closeCircleLine);
+addIcon("arrow-up-line", arrowUpLine);
+addIcon("arrow-down-line", arrowDownLine);
+addIcon("bookmark-2-line", bookmark2Line);
+addIcon("add", addFill);
 
 // Font Awesome 4
 import faUser from "@iconify-icons/fa/user";
@@ -80,6 +92,20 @@ import faSignOut from "@iconify-icons/fa/sign-out";
 addIcon("fa-user", faUser);
 addIcon("fa-lock", faLock);
 addIcon("fa-sign-out", faSignOut);
+
+// Unicons
+import Import from "@iconify-icons/uil/import";
+import Export from "@iconify-icons/uil/export";
+import ArrowsShrinkV from "@iconify-icons/uil/arrows-shrink-v";
+addIcon("import", Import);
+addIcon("export", Export);
+addIcon("density", ArrowsShrinkV);
+
+// fluent
+import Peoples from "@iconify-icons/fluent/people-swap-28-filled";
+import FlUser from "@iconify-icons/fluent/person-12-filled";
+addIcon("peoples", Peoples);
+addIcon("flUser", FlUser);
 
 // Iconify Icon在Vue里离线使用（用于内网环境）https://docs.iconify.design/icon-components/vue/offline.html
 export default defineComponent({

@@ -3,9 +3,8 @@ const Layout = () => import("/@/layout/index.vue");
 
 const ableRouter = {
   path: "/able",
-  name: "components",
   component: Layout,
-  redirect: "/able/menuTree",
+  redirect: "/able/watermark",
   meta: {
     icon: "ubuntu-fill",
     title: $t("menus.hsAble"),
@@ -13,15 +12,6 @@ const ableRouter = {
     rank: 3
   },
   children: [
-    {
-      path: "/able/menuTree",
-      name: "reMenuTree",
-      component: () => import("/@/views/able/menu-tree.vue"),
-      meta: {
-        title: $t("menus.hsMenuTree"),
-        i18n: true
-      }
-    },
     {
       path: "/able/watermark",
       name: "reWatermark",
@@ -55,6 +45,51 @@ const ableRouter = {
       component: () => import("/@/views/able/timeline.vue"),
       meta: {
         title: $t("menus.hsTimeline"),
+        i18n: true
+      }
+    },
+    {
+      path: "/able/menuTree",
+      name: "reMenuTree",
+      component: () => import("/@/views/able/menu-tree.vue"),
+      meta: {
+        title: $t("menus.hsMenuTree"),
+        i18n: true
+      }
+    },
+    {
+      path: "/able/lineTree",
+      name: "reLineTree",
+      component: () => import("/@/views/able/line-tree.vue"),
+      meta: {
+        title: $t("menus.hsLineTree"),
+        i18n: true
+      }
+    },
+    {
+      path: "/able/antTabs",
+      name: "reAntTabs",
+      component: () => import("/@/views/able/ant-tabs.vue"),
+      meta: {
+        title: $t("menus.hsAntTabs"),
+        i18n: true
+      }
+    },
+    {
+      path: "/able/antAnchor",
+      name: "reAntAnchor",
+      component: () => import("/@/views/able/ant-anchor.vue"),
+      meta: {
+        title: $t("menus.hsAntAnchor"),
+        i18n: true
+      }
+    },
+    {
+      path: "/able/antTreeSelect",
+      name: "reAntTreeSelect",
+      component: () => import("/@/views/able/ant-treeSelect.vue"),
+      meta: {
+        title: $t("menus.hsAntTreeSelect"),
         i18n: true
       }
     }

@@ -10,8 +10,8 @@ const props = defineProps({
 });
 
 const titleRef = ref(null);
-const descriptionRef = ref(null);
 const titleTooltip = ref(false);
+const descriptionRef = ref(null);
 const descriptionTooltip = ref(false);
 
 function hoverTitle() {
@@ -50,7 +50,7 @@ function hoverDescription(event, description) {
       :size="30"
       :src="props.noticeItem.avatar"
       class="notice-container-avatar"
-    ></el-avatar>
+    />
     <div class="notice-container-text">
       <div class="notice-text-title">
         <el-tooltip

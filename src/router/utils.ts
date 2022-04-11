@@ -22,6 +22,14 @@ import { getAsyncRoutes } from "/@/api/routes";
 
 // 按照路由中meta下的rank等级升序来排序路由
 function ascending(arr: any[]) {
+  arr.forEach(v => {
+    if (v?.meta?.rank === null) v.meta.rank = undefined;
+    if (v?.meta?.rank === 0) {
+      if (v.name !== "home" && v.path !== "/") {
+        console.warn("rank only the home page can be 0");
+      }
+    }
+  });
   return arr.sort(
     (a: { meta: { rank: number } }, b: { meta: { rank: number } }) => {
       return a?.meta?.rank - b?.meta?.rank;
@@ -226,7 +234,11 @@ function addAsyncRoutes(arrRoutes: Array<RouteRecordRaw>) {
     } else if (v.meta?.frameSrc) {
       v.component = IFrame;
     } else {
-      const index = modulesRoutesKeys.findIndex(ev => ev.includes(v.path));
+      // 对后端传component组件路径和不传做兼容（如果后端传component组件路径，那么path可以随便写，如果不传，component组件路径会根path保持一致）
+      const index = v?.component
+        ? // @ts-expect-error
+          modulesRoutesKeys.findIndex(ev => ev.includes(v.component))
+        : modulesRoutesKeys.findIndex(ev => ev.includes(v.path));
       v.component = modulesRoutes[modulesRoutesKeys[index]];
     }
     if (v.children) {

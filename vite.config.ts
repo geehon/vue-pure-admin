@@ -16,9 +16,7 @@ const pathResolve = (dir: string): string => {
 // 设置别名
 const alias: Record<string, string> = {
   "/@": pathResolve("src"),
-  "@build": pathResolve("build"),
-  //解决开发环境下的警告
-  "vue-i18n": "vue-i18n/dist/vue-i18n.cjs.js"
+  "@build": pathResolve("build")
 };
 
 const { dependencies, devDependencies, name, version } = pkg;
@@ -91,7 +89,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
         "vxe-table/lib/locale/lang/zh-CN",
         "vxe-table/lib/locale/lang/en-US"
       ],
-      exclude: ["@zougt/vite-plugin-theme-preprocessor/dist/browser-utils"]
+      exclude: ["@pureadmin/theme/dist/browser-utils"]
     },
     build: {
       sourcemap: false,

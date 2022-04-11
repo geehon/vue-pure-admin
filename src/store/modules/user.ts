@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
 import { store } from "/@/store";
 import { userType } from "./types";
-import { useRouter } from "vue-router";
+import { router } from "/@/router";
+import { storageSession } from "/@/utils/storage";
 import { getLogin, refreshToken } from "/@/api/user";
-import { storageLocal, storageSession } from "/@/utils/storage";
 import { getToken, setToken, removeToken } from "/@/utils/auth";
 import { useMultiTagsStoreHook } from "/@/store/modules/multiTags";
 
@@ -51,7 +51,6 @@ export const useUserStore = defineStore({
       this.token = "";
       this.name = "";
       removeToken();
-      storageLocal.clear();
       storageSession.clear();
       useMultiTagsStoreHook().handleTags("equal", [
         {
@@ -64,7 +63,7 @@ export const useUserStore = defineStore({
           }
         }
       ]);
-      useRouter().push("/login");
+      router.push("/login");
     },
     // 刷新token
     async refreshToken(data) {

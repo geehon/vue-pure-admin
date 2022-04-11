@@ -1,3 +1,4 @@
+import { resolve } from "path";
 import vue from "@vitejs/plugin-vue";
 import { viteBuildInfo } from "./info";
 import svgLoader from "vite-svg-loader";
@@ -5,67 +6,35 @@ import legacy from "@vitejs/plugin-legacy";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import WindiCSS from "vite-plugin-windicss";
 import { viteMockServe } from "vite-plugin-mock";
-import liveReload from "vite-plugin-live-reload";
 import styleImport from "vite-plugin-style-import";
+import VueI18n from "@intlify/vite-plugin-vue-i18n";
 import ElementPlus from "unplugin-element-plus/vite";
 import { visualizer } from "rollup-plugin-visualizer";
 import removeConsole from "vite-plugin-remove-console";
-import themePreprocessorPlugin from "@zougt/vite-plugin-theme-preprocessor";
+import themePreprocessorPlugin from "@pureadmin/theme";
+import { genScssMultipleScopeVars } from "/@/layout/theme";
 
 export function getPluginsList(command, VITE_LEGACY) {
   const prodMock = true;
   const lifecycle = process.env.npm_lifecycle_event;
   return [
     vue(),
+    // https://github.com/intlify/bundle-tools/tree/main/packages/vite-plugin-vue-i18n
+    VueI18n({
+      runtimeOnly: true,
+      compositionOnly: true,
+      include: [resolve("locales/**")]
+    }),
     // jsx、tsx语法支持
     vueJsx(),
     WindiCSS(),
     // 线上环境删除console
     removeConsole(),
     viteBuildInfo(),
-    // 修改layout文件夹下的文件时自动重载浏览器 解决 https://github.com/xiaoxian521/vue-pure-admin/issues/170
-    liveReload(["src/layout/**/*", "src/router/**/*"]),
     // 自定义主题
     themePreprocessorPlugin({
       scss: {
-        multipleScopeVars: [
-          {
-            scopeName: "layout-theme-default",
-            path: "src/layout/theme/default-vars.scss"
-          },
-          {
-            scopeName: "layout-theme-light",
-            path: "src/layout/theme/light-vars.scss"
-          },
-          {
-            scopeName: "layout-theme-dusk",
-            path: "src/layout/theme/dusk-vars.scss"
-          },
-          {
-            scopeName: "layout-theme-volcano",
-            path: "src/layout/theme/volcano-vars.scss"
-          },
-          {
-            scopeName: "layout-theme-yellow",
-            path: "src/layout/theme/yellow-vars.scss"
-          },
-          {
-            scopeName: "layout-theme-mingQing",
-            path: "src/layout/theme/mingQing-vars.scss"
-          },
-          {
-            scopeName: "layout-theme-auroraGreen",
-            path: "src/layout/theme/auroraGreen-vars.scss"
-          },
-          {
-            scopeName: "layout-theme-pink",
-            path: "src/layout/theme/pink-vars.scss"
-          },
-          {
-            scopeName: "layout-theme-saucePurple",
-            path: "src/layout/theme/saucePurple-vars.scss"
-          }
-        ],
+        multipleScopeVars: genScssMultipleScopeVars(),
         // 默认取 multipleScopeVars[0].scopeName
         defaultScopeName: "",
         // 在生产模式是否抽取独立的主题css文件，extract为true以下属性有效

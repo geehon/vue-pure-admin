@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
+import Search from "../search/index.vue";
 import Notice from "../notice/index.vue";
 import { useNav } from "../../hooks/nav";
 import { templateRef } from "@vueuse/core";
@@ -16,7 +17,7 @@ import globalization from "/@/assets/svg/globalization.svg?component";
 import { ref, watch, nextTick, onMounted, getCurrentInstance } from "vue";
 
 const route = useRoute();
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 const routers = useRouter().options.routes;
 const menuRef = templateRef<ElRef | null>("menu", null);
 const instance =
@@ -31,7 +32,7 @@ const {
   menuSelect,
   resolvePath,
   pureApp,
-  usename,
+  username,
   getDropdownItemStyle
 } = useNav();
 
@@ -118,11 +119,9 @@ function translationEn() {
         :index="resolvePath(route) || route.redirect"
       >
         <template #title>
-          <el-icon v-show="route.meta.icon" :class="route.meta.icon">
-            <component
-              :is="useRenderIcon(route.meta && route.meta.icon)"
-            ></component>
-          </el-icon>
+          <div v-show="route.meta.icon" :class="['el-icon', route.meta.icon]">
+            <component :is="useRenderIcon(route.meta && route.meta.icon)" />
+          </div>
           <span>{{ transformI18n(route.meta.title, route.meta.i18n) }}</span>
           <FontIcon
             v-if="route.meta.extraIcon"
@@ -131,11 +130,13 @@ function translationEn() {
             style="position: absolute; right: 10px"
             :icon="route.meta.extraIcon.name"
             :svg="route.meta.extraIcon.svg ? true : false"
-          ></FontIcon>
+          />
         </template>
       </el-menu-item>
     </el-menu>
     <div class="horizontal-header-right">
+      <!-- 菜单搜索 -->
+      <Search />
       <!-- 通知 -->
       <Notice id="header-notice" />
       <!-- 全屏 -->
@@ -148,15 +149,15 @@ function translationEn() {
             <el-dropdown-item
               :style="getDropdownItemStyle(locale, 'zh')"
               @click="translationCh"
-              ><el-icon class="check-zh" v-show="locale === 'zh'"
-                ><IconifyIconOffline icon="check" /></el-icon
+              ><span class="check-zh" v-show="locale === 'zh'"
+                ><IconifyIconOffline icon="check" /></span
               >简体中文</el-dropdown-item
             >
             <el-dropdown-item
               :style="getDropdownItemStyle(locale, 'en')"
               @click="translationEn"
-              ><el-icon class="check-en" v-show="locale === 'en'"
-                ><IconifyIconOffline icon="check" /></el-icon
+              ><span class="check-en" v-show="locale === 'en'"
+                ><IconifyIconOffline icon="check" /></span
               >English</el-dropdown-item
             >
           </el-dropdown-menu>
@@ -166,7 +167,7 @@ function translationEn() {
       <el-dropdown trigger="click">
         <span class="el-dropdown-link">
           <img :src="avatars" />
-          <p>{{ usename }}</p>
+          <p>{{ username }}</p>
         </span>
         <template #dropdown>
           <el-dropdown-menu class="logout">
@@ -175,18 +176,18 @@ function translationEn() {
                 icon="logout-circle-r-line"
                 style="margin: 5px"
               />
-              {{ $t("buttons.hsLoginOut") }}</el-dropdown-item
+              {{ t("buttons.hsLoginOut") }}</el-dropdown-item
             >
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <el-icon
+      <span
         class="el-icon-setting"
-        :title="$t('buttons.hssystemSet')"
+        :title="t('buttons.hssystemSet')"
         @click="onPanel"
       >
         <IconifyIconOffline icon="setting" />
-      </el-icon>
+      </span>
     </div>
   </div>
 </template>

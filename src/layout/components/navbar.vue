@@ -2,6 +2,7 @@
 import { useI18n } from "vue-i18n";
 import { useNav } from "../hooks/nav";
 import { useRoute } from "vue-router";
+import Search from "./search/index.vue";
 import Notice from "./notice/index.vue";
 import mixNav from "./sidebar/mixNav.vue";
 import avatars from "/@/assets/avatars.jpg";
@@ -13,7 +14,7 @@ import screenfull from "../components/screenfull/index.vue";
 import globalization from "/@/assets/svg/globalization.svg?component";
 
 const route = useRoute();
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 const instance =
   getCurrentInstance().appContext.config.globalProperties.$storage;
 const {
@@ -22,7 +23,7 @@ const {
   changeTitle,
   toggleSideBar,
   pureApp,
-  usename,
+  username,
   getDropdownItemStyle
 } = useNav();
 
@@ -58,6 +59,8 @@ function translationEn() {
     <mixNav v-if="pureApp.layout === 'mix'" />
 
     <div v-if="pureApp.layout === 'vertical'" class="vertical-header-right">
+      <!-- 菜单搜索 -->
+      <Search />
       <!-- 通知 -->
       <Notice id="header-notice" />
       <!-- 全屏 -->
@@ -79,10 +82,11 @@ function translationEn() {
             <el-dropdown-item
               :style="getDropdownItemStyle(locale, 'en')"
               @click="translationEn"
-              ><el-icon class="check-en" v-show="locale === 'en'"
-                ><IconifyIconOffline icon="check" /></el-icon
-              >English</el-dropdown-item
             >
+              <span class="check-en" v-show="locale === 'en'">
+                <IconifyIconOffline icon="check" /> </span
+              >English
+            </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -90,7 +94,7 @@ function translationEn() {
       <el-dropdown trigger="click">
         <span class="el-dropdown-link">
           <img :src="avatars" />
-          <p>{{ usename }}</p>
+          <p>{{ username }}</p>
         </span>
         <template #dropdown>
           <el-dropdown-menu class="logout">
@@ -98,18 +102,18 @@ function translationEn() {
               <IconifyIconOffline
                 icon="logout-circle-r-line"
                 style="margin: 5px"
-              />{{ $t("buttons.hsLoginOut") }}</el-dropdown-item
+              />{{ t("buttons.hsLoginOut") }}</el-dropdown-item
             >
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <el-icon
+      <span
         class="el-icon-setting"
-        :title="$t('buttons.hssystemSet')"
+        :title="t('buttons.hssystemSet')"
         @click="onPanel"
       >
         <IconifyIconOffline icon="setting" />
-      </el-icon>
+      </span>
     </div>
   </div>
 </template>
