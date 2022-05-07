@@ -9,7 +9,7 @@ const ableRouter = {
     icon: "ubuntu-fill",
     title: $t("menus.hsAble"),
     i18n: true,
-    rank: 3
+    rank: 4
   },
   children: [
     {
@@ -90,6 +90,51 @@ const ableRouter = {
       component: () => import("/@/views/able/ant-treeSelect.vue"),
       meta: {
         title: $t("menus.hsAntTreeSelect"),
+        i18n: true
+      }
+    },
+    {
+      path: "/able/debounce",
+      name: "reDebounce",
+      component: () => import("/@/views/able/debounce.vue"),
+      meta: {
+        title: $t("menus.hsDebounce"),
+        i18n: true
+      }
+    },
+    {
+      path: "/able/barcode",
+      name: "reBarcode",
+      component: () => import("/@/views/able/barcode.vue"),
+      meta: {
+        title: $t("menus.hsBarcode"),
+        i18n: true
+      }
+    },
+    {
+      path: "/able/qrcode",
+      name: "reQrcode",
+      component: () => import("/@/views/able/qrcode.vue"),
+      meta: {
+        title: $t("menus.hsQrcode"),
+        i18n: true
+      }
+    },
+    {
+      path: "/able/cascader",
+      name: "reCascader",
+      component: () => import("/@/views/able/cascader.vue"),
+      meta: {
+        title: $t("menus.hsCascader"),
+        i18n: true
+      }
+    },
+    {
+      path: "/able/swiper",
+      name: "reSwiper",
+      component: () => import("/@/views/able/swiper.vue"),
+      meta: {
+        title: $t("menus.hsSwiper"),
         i18n: true
       }
     }

@@ -24,13 +24,18 @@ const {
   toggleSideBar,
   pureApp,
   username,
-  getDropdownItemStyle
+  avatarsStyle,
+  getDropdownItemStyle,
+  changeWangeditorLanguage
 } = useNav();
 
 watch(
   () => locale.value,
   () => {
     changeTitle(route.meta);
+    locale.value === "en"
+      ? changeWangeditorLanguage(locale.value)
+      : changeWangeditorLanguage("zh-CN");
   }
 );
 
@@ -93,8 +98,8 @@ function translationEn() {
       <!-- 退出登陆 -->
       <el-dropdown trigger="click">
         <span class="el-dropdown-link">
-          <img :src="avatars" />
-          <p>{{ username }}</p>
+          <img v-if="avatars" :src="avatars" :style="avatarsStyle" />
+          <p v-if="username">{{ username }}</p>
         </span>
         <template #dropdown>
           <el-dropdown-menu class="logout">
@@ -169,7 +174,6 @@ function translationEn() {
     }
 
     .el-dropdown-link {
-      width: 100px;
       height: 48px;
       padding: 10px;
       display: flex;

@@ -12,15 +12,6 @@ const systemRouter = {
     rank: 11
   },
   children: [
-    // {
-    //   path: "/system/dict/index",
-    //   name: "dict",
-    //   meta: {
-    //     title: "menus.hsDict",
-    //     i18n: true,
-    //     keepAlive: true
-    //   }
-    // },
     {
       path: "/system/user/index",
       name: "user",
@@ -34,7 +25,7 @@ const systemRouter = {
       path: "/system/role/index",
       name: "role",
       meta: {
-        icon: "peoples",
+        icon: "role",
         title: "menus.hsRole",
         i18n: true
       }
@@ -43,9 +34,20 @@ const systemRouter = {
       path: "/system/dept/index",
       name: "dept",
       meta: {
-        icon: "office-building",
+        icon: "dept",
         title: "menus.hsDept",
         i18n: true
+      }
+    },
+    {
+      path: "/system/dict",
+      component: "/system/dict/index",
+      name: "dict",
+      meta: {
+        icon: "dict",
+        title: "menus.hsDict",
+        i18n: true,
+        keepAlive: true
       }
     }
   ]
@@ -127,7 +129,7 @@ const tabsRouter = {
     icon: "IF-team-icontabs",
     title: "menus.hstabs",
     i18n: true,
-    rank: 12
+    rank: 13
   },
   children: [
     {

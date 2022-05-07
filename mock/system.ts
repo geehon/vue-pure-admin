@@ -10,45 +10,59 @@ export default [
         data: {
           list: [
             {
-              name: "董事长",
-              code: "ceo",
+              createTime: 1609837428000,
+              updateTime: 1645477701000,
+              creator: "admin",
+              updater: "",
+              deleted: false,
+              tenantId: 1,
+              id: 1,
+              name: "超级管理员",
+              code: "super_admin",
               sort: 1,
               status: 0,
-              remark: "",
-              id: 1,
-              createTime: 1609837428000
+              type: 1,
+              remark: "超级管理员",
+              dataScope: 1,
+              dataScopeDeptIds: null
             },
             {
-              name: "项目经理",
-              code: "se",
+              createTime: 1609837428000,
+              updateTime: 1645477700000,
+              creator: "admin",
+              updater: "",
+              deleted: false,
+              tenantId: 1,
+              id: 2,
+              name: "普通角色",
+              code: "common",
               sort: 2,
               status: 0,
-              remark: "",
-              id: 2,
-              createTime: 1609837428000
+              type: 1,
+              remark: "普通角色",
+              dataScope: 2,
+              dataScopeDeptIds: null
             },
             {
-              name: "人力资源",
-              code: "hr",
-              sort: 3,
-              status: 1,
-              remark: "",
-              id: 3,
-              createTime: 1609837428000
-            },
-            {
-              name: "普通员工",
-              code: "user",
-              sort: 4,
+              createTime: 1609912175000,
+              updateTime: 1647698441000,
+              creator: "",
+              updater: "1",
+              deleted: false,
+              tenantId: 1,
+              id: 101,
+              name: "测试账号",
+              code: "test",
+              sort: 0,
               status: 0,
-              remark: "",
-              id: 4,
-              createTime: 1609837428000
+              type: 2,
+              remark: "132",
+              dataScope: 1,
+              dataScopeDeptIds: []
             }
           ],
-          total: 4
-        },
-        msg: ""
+          total: 3
+        }
       };
     }
   },
@@ -60,7 +74,8 @@ export default [
         code: 0,
         data: [
           {
-            name: "pure-admin",
+            name: "杭州总公司",
+            type: 1, // 1 公司 2 分公司 3 部门
             parentId: 0,
             sort: 0,
             leaderUserId: 1,
@@ -72,7 +87,8 @@ export default [
             remark: "备注、备注、备注、备注、备注、备注、备注"
           },
           {
-            name: "深圳总公司",
+            name: "郑州分公司",
+            type: 2,
             parentId: 100,
             sort: 1,
             leaderUserId: 104,
@@ -85,6 +101,7 @@ export default [
           },
           {
             name: "研发部门",
+            type: 3,
             parentId: 101,
             sort: 1,
             leaderUserId: 104,
@@ -97,6 +114,7 @@ export default [
           },
           {
             name: "市场部门",
+            type: 3,
             parentId: 102,
             sort: 1,
             leaderUserId: null,
@@ -108,7 +126,8 @@ export default [
             remark: "备注、备注、备注、备注、备注、备注、备注"
           },
           {
-            name: "长沙分公司",
+            name: "深圳分公司",
+            type: 2,
             parentId: 100,
             sort: 2,
             leaderUserId: null,
@@ -121,6 +140,7 @@ export default [
           },
           {
             name: "市场部门",
+            type: 3,
             parentId: 101,
             sort: 2,
             leaderUserId: null,
@@ -133,6 +153,7 @@ export default [
           },
           {
             name: "财务部门",
+            type: 3,
             parentId: 102,
             sort: 2,
             leaderUserId: null,
@@ -145,6 +166,7 @@ export default [
           },
           {
             name: "测试部门",
+            type: 3,
             parentId: 101,
             sort: 3,
             leaderUserId: null,
@@ -157,6 +179,7 @@ export default [
           },
           {
             name: "财务部门",
+            type: 3,
             parentId: 101,
             sort: 4,
             leaderUserId: 103,
@@ -169,6 +192,7 @@ export default [
           },
           {
             name: "运维部门",
+            type: 3,
             parentId: 101,
             sort: 5,
             leaderUserId: null,
@@ -179,8 +203,85 @@ export default [
             createTime: 1609837427000,
             remark: "备注、备注、备注、备注、备注、备注、备注"
           }
-        ],
-        msg: ""
+        ]
+      };
+    }
+  },
+  {
+    url: "/user",
+    method: "post",
+    response: () => {
+      return {
+        code: 0,
+        data: {
+          list: [
+            {
+              username: "admin",
+              nickname: "admin",
+              remark: "管理员",
+              deptId: 103,
+              postIds: [1],
+              mobile: "15888888888",
+              sex: 0,
+              id: 1,
+              status: 0,
+              createTime: 1609837427000,
+              dept: {
+                id: 103,
+                name: "研发部门"
+              }
+            },
+            {
+              username: "pure",
+              nickname: "pure",
+              remark: "不要吓我",
+              deptId: 104,
+              postIds: [1],
+              mobile: "15888888888",
+              sex: 0,
+              id: 100,
+              status: 1,
+              createTime: 1609981637000,
+              dept: {
+                id: 104,
+                name: "市场部门"
+              }
+            },
+            {
+              username: "小姐姐",
+              nickname: "girl",
+              remark: null,
+              deptId: 106,
+              postIds: null,
+              mobile: "15888888888",
+              sex: 1,
+              id: 103,
+              status: 1,
+              createTime: 1610553035000,
+              dept: {
+                id: 106,
+                name: "财务部门"
+              }
+            },
+            {
+              username: "小哥哥",
+              nickname: "boy",
+              remark: null,
+              deptId: 107,
+              postIds: [],
+              mobile: "15888888888",
+              sex: 0,
+              id: 104,
+              status: 0,
+              createTime: 1611166433000,
+              dept: {
+                id: 107,
+                name: "运维部门"
+              }
+            }
+          ],
+          total: 4
+        }
       };
     }
   }

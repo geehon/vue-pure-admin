@@ -74,3 +74,11 @@ menus:
   hsAntTabs: Imitate Antdv Tabs
   hsAntAnchor: Imitate Antdv Anchor
   hsAntTreeSelect: Imitate Antdv TreeSelector
+  hsList: List Page
+  hsListCard: Card List Page
+  hsDebounce: Debounce & Throttle
+  hsFormDesign: Form Design
+  hsBarcode: Barcode
+  hsQrcode: Qrcode
+  hsCascader: Area Cascader
+  hsSwiper: Swiper Plugin

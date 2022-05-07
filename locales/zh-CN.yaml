@@ -74,3 +74,11 @@ menus:
   hsAntTabs: 仿antdv标签页
   hsAntAnchor: 仿antdv锚点
   hsAntTreeSelect: 仿antdv树型选择器
+  hsList: 列表页
+  hsListCard: 卡片列表页
+  hsDebounce: 防抖节流
+  hsFormDesign: 表单设计器
+  hsBarcode: 条形码
+  hsQrcode: 二维码
+  hsCascader: 区域级联选择器
+  hsSwiper: Swiper插件
