@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { ReNormalCountTo, ReboundCountTo } from "/@/components/ReCountTo";
+
+defineOptions({
+  name: "CountTo"
+});
 </script>
 
 <template>
@@ -30,14 +34,3 @@ import { ReNormalCountTo, ReboundCountTo } from "/@/components/ReCountTo";
     </div>
   </el-card>
 </template>
-
-<style lang="scss" scoped>
-.flex {
-  display: flex;
-}
-
-:deep(.el-card) {
-  text-align: center;
-  margin-bottom: 10px;
-}
-</style>

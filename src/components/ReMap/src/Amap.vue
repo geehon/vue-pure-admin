@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import AMapLoader from "@amap/amap-jsapi-loader";
 import { reactive, getCurrentInstance, onBeforeMount, onUnmounted } from "vue";
+import { deviceDetection } from "@pureadmin/utils";
+import AMapLoader from "@amap/amap-jsapi-loader";
 import { mapJson } from "/@/api/mock";
-import { deviceDetection } from "/@/utils/deviceDetection";
 import car from "/@/assets/car.png";
 
 export interface MapConfigureInter {
@@ -15,9 +15,9 @@ export interface MapConfigureInter {
   plugin?: Fn;
 }
 
-type resultType = {
-  info: Array<undefined>;
-};
+defineOptions({
+  name: "Amap"
+});
 
 let MarkerCluster;
 let map: MapConfigureInter;
@@ -92,8 +92,8 @@ onBeforeMount(() => {
 
       // 获取模拟车辆信息
       mapJson()
-        .then((res: resultType) => {
-          let points: object = res.info.map((v: any) => {
+        .then(({ info }) => {
+          let points: object = info.map(v => {
             return {
               lnglat: [v.lng, v.lat],
               ...v

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { ElTree } from "element-plus";
-import { handleTree } from "/@/utils/tree";
 import { getDeptList } from "/@/api/system";
+import { handleTree } from "@pureadmin/utils";
 import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
 import { ref, watch, onMounted, getCurrentInstance } from "vue";
 
@@ -45,8 +45,7 @@ function nodeClick(value) {
 }
 
 function toggleRowExpansionAll(status) {
-  // @ts-expect-error
-  let nodes = proxy.$refs["treeRef"].store._getAllNodes();
+  let nodes = (proxy.$refs["treeRef"] as any).store._getAllNodes();
   for (var i = 0; i < nodes.length; i++) {
     nodes[i].expanded = status;
   }
@@ -65,13 +64,13 @@ watch(searchValue, val => {
 
 onMounted(async () => {
   let { data } = await getDeptList();
-  treeData.value = handleTree(data);
+  treeData.value = handleTree(data as any);
 });
 </script>
 
 <template>
-  <div class="max-w-260px h-full min-h-780px bg-white">
-    <div class="flex items-center h-34px">
+  <div class="max-w-[260px] h-full min-h-[780px] bg-bg_color">
+    <div class="flex items-center h-[34px]">
       <p class="flex-1 ml-2 font-bold text-base truncate" title="部门列表">
         部门列表
       </p>
@@ -93,7 +92,7 @@ onMounted(async () => {
       </el-input>
       <el-dropdown>
         <IconifyIconOffline
-          class="w-28px cursor-pointer"
+          class="w-[28px] cursor-pointer"
           width="18px"
           icon="more-vertical"
         />
@@ -101,8 +100,9 @@ onMounted(async () => {
           <el-dropdown-menu>
             <el-dropdown-item>
               <el-button
-                class="reset-margin !h-20px !text-gray-500"
-                type="text"
+                class="reset-margin !h-[20px] !text-gray-500 dark:!text-white dark:hover:!text-primary"
+                link
+                type="primary"
                 :icon="useRenderIcon('expand')"
                 @click="toggleRowExpansionAll(true)"
               >
@@ -111,8 +111,9 @@ onMounted(async () => {
             </el-dropdown-item>
             <el-dropdown-item>
               <el-button
-                class="reset-margin !h-20px !text-gray-500"
-                type="text"
+                class="reset-margin !h-[20px] !text-gray-500 dark:!text-white dark:hover:!text-primary"
+                link
+                type="primary"
                 :icon="useRenderIcon('unExpand')"
                 @click="toggleRowExpansionAll(false)"
               >
@@ -121,8 +122,9 @@ onMounted(async () => {
             </el-dropdown-item>
             <el-dropdown-item>
               <el-button
-                class="reset-margin !h-20px !text-gray-500"
-                type="text"
+                class="reset-margin !h-[20px] !text-gray-500 dark:!text-white dark:hover:!text-primary"
+                link
+                type="primary"
                 :icon="useRenderIcon('reset')"
                 @click="onReset"
               >
@@ -156,7 +158,8 @@ onMounted(async () => {
             'select-none',
             searchValue.trim().length > 0 &&
               node.label.includes(searchValue) &&
-              'text-red-500'
+              'text-red-500',
+            highlightMap[node.id]?.highlight ? 'dark:text-primary' : ''
           ]"
           :style="{
             background: highlightMap[node.id]?.highlight

@@ -1,8 +1,5 @@
-import { App } from "vue";
-import epTableProBar from "./src/bar";
+import tableProBar from "./src/bar";
+import { withInstall } from "@pureadmin/utils";
 
-export const EpTableProBar = Object.assign(epTableProBar, {
-  install(app: App) {
-    app.component(epTableProBar.name, epTableProBar);
-  }
-});
+/** table-crud组件 */
+export const TableProBar = withInstall(tableProBar);

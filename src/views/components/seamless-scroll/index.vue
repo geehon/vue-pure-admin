@@ -3,7 +3,10 @@ import { ref, reactive, unref } from "vue";
 import { templateRef } from "@vueuse/core";
 import SeamlessScroll from "/@/components/ReSeamlessScroll";
 
-// eslint-disable-next-line no-undef
+defineOptions({
+  name: "SeamlessScroll"
+});
+
 const scroll = templateRef<ElRef | null>("scroll", null);
 
 let listData = ref([
@@ -41,8 +44,7 @@ let classOption = reactive({
 });
 
 function changeDirection(val) {
-  // @ts-ignore
-  unref(scroll).reset();
+  (unref(scroll) as any).reset();
   unref(classOption).direction = val;
 }
 </script>
@@ -53,43 +55,55 @@ function changeDirection(val) {
       <template #header>
         <div class="card-header">
           <span>无缝滚动示例</span>
-          <el-button class="button" type="text" @click="changeDirection('top')">
+          <el-button
+            class="button"
+            link
+            type="primary"
+            @click="changeDirection('top')"
+          >
             <span
               :style="{ color: classOption.direction === 'top' ? 'red' : '' }"
-              >向上滚动</span
             >
+              向上滚动
+            </span>
           </el-button>
           <el-button
             class="button"
-            type="text"
+            link
+            type="primary"
             @click="changeDirection('bottom')"
           >
             <span
               :style="{
                 color: classOption.direction === 'bottom' ? 'red' : ''
               }"
-              >向下滚动</span
             >
+              向下滚动
+            </span>
           </el-button>
           <el-button
             class="button"
-            type="text"
+            link
+            type="primary"
             @click="changeDirection('left')"
           >
             <span
               :style="{ color: classOption.direction === 'left' ? 'red' : '' }"
-              >向左滚动</span
             >
+              向左滚动
+            </span>
           </el-button>
           <el-button
             class="button"
-            type="text"
+            link
+            type="primary"
             @click="changeDirection('right')"
           >
             <span
               :style="{ color: classOption.direction === 'right' ? 'red' : '' }"
-              >向右滚动</span
             >
+              向右滚动
+            </span>
           </el-button>
         </div>
       </template>

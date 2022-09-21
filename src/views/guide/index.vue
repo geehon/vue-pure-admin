@@ -2,20 +2,16 @@
 import Driver from "driver.js";
 import "driver.js/dist/driver.min.css";
 
+defineOptions({
+  name: "Guide"
+});
+
 const steps = [
   {
     element: "#header-notice",
     popover: {
       title: "消息通知",
       description: "你可以在这里查看管理员发送的消息",
-      position: "left"
-    }
-  },
-  {
-    element: "#header-screenfull",
-    popover: {
-      title: "全屏",
-      description: "你可以在这里进行全屏切换",
       position: "left"
     }
   },
@@ -28,7 +24,7 @@ const steps = [
     }
   },
   {
-    element: ".el-icon-setting",
+    element: ".set-icon",
     popover: {
       title: "项目配置",
       description: "你可以在这里查看项目配置",
@@ -68,9 +64,9 @@ const guide = () => {
   <el-card>
     <template #header>
       <div class="card-header">
-        <span class="font-medium"
-          >引导页对于一些第一次进入项目的人很有用，你可以简单介绍下项目的功能</span
-        >
+        <span class="font-medium">
+          引导页对于一些第一次进入项目的人很有用，你可以简单介绍下项目的功能
+        </span>
       </div>
     </template>
     <el-button

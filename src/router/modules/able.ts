@@ -1,141 +1,157 @@
 import { $t } from "/@/plugins/i18n";
-const Layout = () => import("/@/layout/index.vue");
+import type { RouteConfigsTable } from "/#/index";
 
-const ableRouter = {
+const ableRouter: RouteConfigsTable = {
   path: "/able",
-  component: Layout,
   redirect: "/able/watermark",
   meta: {
     icon: "ubuntu-fill",
     title: $t("menus.hsAble"),
-    i18n: true,
     rank: 4
   },
   children: [
     {
       path: "/able/watermark",
-      name: "reWatermark",
+      name: "WaterMark",
       component: () => import("/@/views/able/watermark.vue"),
       meta: {
-        title: $t("menus.hsWatermark"),
-        i18n: true
+        title: $t("menus.hsWatermark")
       }
     },
     {
       path: "/able/print",
-      name: "rePrint",
+      name: "Print",
       component: () => import("/@/views/able/print.vue"),
       meta: {
-        title: $t("menus.hsPrint"),
-        i18n: true
+        title: $t("menus.hsPrint")
       }
     },
     {
       path: "/able/iconSelect",
-      name: "reIconSelect",
+      name: "IconSelect",
       component: () => import("/@/views/able/icon-select.vue"),
       meta: {
-        title: $t("menus.hsIconSelect"),
-        i18n: true
+        title: $t("menus.hsIconSelect")
       }
     },
     {
       path: "/able/timeline",
-      name: "reTimeline",
+      name: "TimeLine",
       component: () => import("/@/views/able/timeline.vue"),
       meta: {
-        title: $t("menus.hsTimeline"),
-        i18n: true
+        title: $t("menus.hsTimeline")
       }
     },
     {
       path: "/able/menuTree",
-      name: "reMenuTree",
+      name: "MenuTree",
       component: () => import("/@/views/able/menu-tree.vue"),
       meta: {
-        title: $t("menus.hsMenuTree"),
-        i18n: true
+        title: $t("menus.hsMenuTree")
       }
     },
     {
       path: "/able/lineTree",
-      name: "reLineTree",
+      name: "LineTree",
       component: () => import("/@/views/able/line-tree.vue"),
       meta: {
-        title: $t("menus.hsLineTree"),
-        i18n: true
+        title: $t("menus.hsLineTree")
       }
     },
     {
       path: "/able/antTabs",
-      name: "reAntTabs",
+      name: "AntTabs",
       component: () => import("/@/views/able/ant-tabs.vue"),
       meta: {
-        title: $t("menus.hsAntTabs"),
-        i18n: true
+        title: $t("menus.hsAntTabs")
       }
     },
     {
       path: "/able/antAnchor",
-      name: "reAntAnchor",
+      name: "AntAnchor",
       component: () => import("/@/views/able/ant-anchor.vue"),
       meta: {
-        title: $t("menus.hsAntAnchor"),
-        i18n: true
+        title: $t("menus.hsAntAnchor")
       }
     },
     {
       path: "/able/antTreeSelect",
-      name: "reAntTreeSelect",
+      name: "AntTreeSelect",
       component: () => import("/@/views/able/ant-treeSelect.vue"),
       meta: {
-        title: $t("menus.hsAntTreeSelect"),
-        i18n: true
+        title: $t("menus.hsAntTreeSelect")
       }
     },
     {
       path: "/able/debounce",
-      name: "reDebounce",
+      name: "Debounce",
       component: () => import("/@/views/able/debounce.vue"),
       meta: {
-        title: $t("menus.hsDebounce"),
-        i18n: true
+        title: $t("menus.hsDebounce")
       }
     },
     {
       path: "/able/barcode",
-      name: "reBarcode",
+      name: "BarCode",
       component: () => import("/@/views/able/barcode.vue"),
       meta: {
-        title: $t("menus.hsBarcode"),
-        i18n: true
+        title: $t("menus.hsBarcode")
       }
     },
     {
       path: "/able/qrcode",
-      name: "reQrcode",
+      name: "QrCode",
       component: () => import("/@/views/able/qrcode.vue"),
       meta: {
-        title: $t("menus.hsQrcode"),
-        i18n: true
+        title: $t("menus.hsQrcode")
       }
     },
     {
       path: "/able/cascader",
-      name: "reCascader",
+      name: "Cascader",
       component: () => import("/@/views/able/cascader.vue"),
       meta: {
-        title: $t("menus.hsCascader"),
-        i18n: true
+        title: $t("menus.hsCascader")
       }
     },
     {
       path: "/able/swiper",
-      name: "reSwiper",
+      name: "Swiper",
       component: () => import("/@/views/able/swiper.vue"),
       meta: {
-        title: $t("menus.hsSwiper"),
-        i18n: true
+        title: $t("menus.hsSwiper")
+      }
+    },
+    {
+      path: "/able/virtualList",
+      name: "VirtualList",
+      component: () => import("/@/views/able/virtual-list/index.vue"),
+      meta: {
+        title: $t("menus.hsVirtualList")
+      }
+    },
+    {
+      path: "/able/pdf",
+      name: "Pdf",
+      component: () => import("/@/views/able/pdf.vue"),
+      meta: {
+        title: $t("menus.hsPdf")
+      }
+    },
+    {
+      path: "/able/execl",
+      name: "Execl",
+      component: () => import("/@/views/able/execl.vue"),
+      meta: {
+        title: $t("menus.hsExecl")
+      }
+    },
+    {
+      path: "/able/infiniteScroll",
+      name: "InfiniteScroll",
+      component: () => import("/@/views/able/infinite-scroll.vue"),
+      meta: {
+        title: $t("menus.hsInfiniteScroll")
       }
     }
   ]

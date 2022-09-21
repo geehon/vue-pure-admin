@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { useI18n } from "vue-i18n";
+import { transformI18n } from "/@/plugins/i18n";
 import ElTreeLine from "/@/components/ReTreeLine";
-import { extractPathList, deleteChildren } from "/@/utils/tree";
+import { extractPathList, deleteChildren } from "@pureadmin/utils";
 import { usePermissionStoreHook } from "/@/store/modules/permission";
-const { t } = useI18n();
+
+defineOptions({
+  name: "LineTree"
+});
 
 let menusData = computed(() => {
   return deleteChildren(usePermissionStoreHook().menusTree);
@@ -27,14 +30,14 @@ let dataProps = {
     </template>
 
     <el-row :gutter="24">
-      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="mb-20px">
+      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="mb-[20px]">
         <el-card>
           <template #header>
             <div class="card-header">
               <span class="font-medium"> 普通树结构 </span>
             </div>
           </template>
-          <div class="max-h-550px overflow-y-auto">
+          <div class="max-h-[550px] overflow-y-auto">
             <el-tree
               :data="menusData"
               :props="dataProps"
@@ -45,7 +48,9 @@ let dataProps = {
               ><template v-slot:default="{ node }">
                 <el-tree-line :node="node" :showLabelLine="true">
                   <template v-slot:node-label>
-                    <span class="text-sm">{{ t(node.data.meta.title) }}</span>
+                    <span class="text-sm">
+                      {{ transformI18n(node.data.meta.title) }}
+                    </span>
                   </template>
                 </el-tree-line>
               </template>
@@ -61,7 +66,7 @@ let dataProps = {
               <span class="font-medium"> 虚拟树结构 </span>
             </div>
           </template>
-          <div class="max-h-550px overflow-y-auto">
+          <div class="max-h-[550px] overflow-y-auto">
             <el-tree-v2
               :data="menusData"
               :props="dataProps"
@@ -77,7 +82,9 @@ let dataProps = {
                   :indent="30"
                 >
                   <template v-slot:node-label>
-                    <span class="text-sm">{{ t(node.data.meta.title) }}</span>
+                    <span class="text-sm">
+                      {{ transformI18n(node.data.meta.title) }}
+                    </span>
                   </template>
                 </el-tree-line>
               </template>

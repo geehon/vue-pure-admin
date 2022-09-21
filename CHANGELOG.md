@@ -1,3 +1,113 @@
+# 3.5.0 (2022-9-10)
+
+### 🎫 Feat
+
+- Add `cssnano` to compress the size of `css` when packaging
+- Add `element-plus` seamless scrolling `Table` page demo
+- Open `vscode` bracket pair guide
+
+### ✔️ refactor
+
+- Replace `unocss` with `tailwindcss`, add `tailwindcss` [documentation](https://xiaoxian521.github.io/pure-admin-doc/pages/39156f/)
+
+### 🐞 Bug fixes
+
+- `token` expires, refresh the infinite loop
+
+### 🍏 Perf
+
+- When resetting the route, clear the cached page
+
+# 3.4.6 (2022-8-23)
+
+### 🐞 Bug fixes
+
+- `process` is not defined in path
+- Fixed an error when dynamic routing `children` is an empty array
+- Fixed `iframe` loading failure
+
+# 3.4.5 (2022-8-22)
+
+### 🐞 Bug fixes
+
+- Fix local responsive storage object setting issue
+
+# 3.4.0 (2022-8-22)
+
+### 🍏 Perf
+
+- Optimized routing
+- Optimized for mobile compatibility
+- Optimized routing parameters (`query`, `params` way to refresh the page does not need to open the tab page cache, the parameters can be retained on the `url` and `tab page`)
+
+# 3.3.5 (2022-8-19)
+
+### 🎫 Feat
+
+- Secondary encapsulation of `Table` of `element-plus` into [@pureadmin/table](https://github.com/xiaoxian521/pure-admin-table), providing flexible configuration items and integrating into the platform
+- Secondary encapsulation of `Descriptions` of `element-plus` into [@pureadmin/descriptions](https://github.com/xiaoxian521/pure-admin-descriptions), providing flexible configuration items and integrating into the platform
+- Centralize most of the tools and hooks of the platform to [@pureadmin/utils](https://pure-admin-utils-docs.vercel.app/), and delete the code concentrated in this library to reduce the size of the platform
+- Add [unplugin-vue-define-options](https://www.npmjs.com/package/unplugin-vue-define-options) plugin, the page can directly write `defineOptions({name: custom name})`
+- Add project files, language analysis tool [cloc](https://www.npmjs.com/package/cloc)
+- Added landing page internationalization
+- Add full routing configuration table type declaration
+- Add virtual listing page demo
+- Add `PDF` preview page demo
+- Added export `execl` page demo
+- Added blank page demo without `Layout`
+
+### ✔️ refactor
+
+- Refactored the theme color to adapt to `element-plus` dark mode (also solved the problem that the same element `css` in `3.3.0` and earlier versions was overwritten many times, resulting in poor style debugging)
+- Refactored route reset function
+
+### 🍏 Perf
+
+- The compatible project storage directory is named in Chinese, but we really do not recommend Chinese naming, because a library may not escape the Chinese path, causing the project to crash
+- Optimized interface type
+
+### 🐞 Bug fixes
+
+- Fixed async routes with `showlink` set to `false`, not showing after refresh
+- Fixed vertical navigation menu text being hidden after collapse when there is no `icon`
+
+# 3.3.0 (2022-5-11)
+
+### 🎫 Feat
+
+- Add user management page demo
+- Add role management page demo
+- Add department management page demo
+- Add card list page demo
+- Integrated form designer
+- Added `PPT` demo
+- Added anti-shake interception demo in the function menu
+- Upgrade `wangeditorV5` (and support internationalization and custom themes)
+- Integrate `tauri` version
+- Added barcode function
+- Added QR code function
+- Use the `Cascader` cascade selector in `element-plus` to write a three-level and two-level linkage demo of Chinese provinces and cities
+- Integrate `Swiper` plugin
+- Routing supports passing `component`, representing the component path
+- Added pre-release packaging mode
+- Add [hooks] to close a tag (https://github.com/xiaoxian521/vue-pure-admin/commit/5e8723a031923e79f507e5a17151d3bd88a51523)
+
+### ✔️ refactor
+
+- Refactored the landing page to be more inclined to the actual business scenario
+- Use `unocss` instead of `windicss`, `unocss` has better performance in development environment, no memory leaks, and `api` is compatible with `windicss`
+
+### 🍏 Perf
+
+- Optimized the style of the `split-pane` component for the platform
+- Optimize internationalization, no longer pass the `i18n` field in the route, the platform automatically reads the files in the `locales` folder of the root directory for internationalization matching
+- Optimized icon selector
+- Optimize `layout` to display user information [commit](https://github.com/xiaoxian521/vue-pure-admin/commit/56f9dc85e7fbe0637605c43577c794de9f8968aa)
+
+### 🐞 Bug fixes
+
+- Fix route initialization problem (Cannot access 'constantRoutes' before initialization)
+
 # 3.2.0 (2022-3-22)
 
 ### 🎫 Feat

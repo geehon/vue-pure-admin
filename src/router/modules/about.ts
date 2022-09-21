@@ -1,24 +1,21 @@
 import { $t } from "/@/plugins/i18n";
-const Layout = () => import("/@/layout/index.vue");
+import type { RouteConfigsTable } from "/#/index";
 
-const aboutRouter = {
+const aboutRouter: RouteConfigsTable = {
   path: "/about",
-  component: Layout,
   redirect: "/about/index",
   meta: {
-    icon: "question-line",
+    // icon: "question-line",
     title: $t("menus.hsAbout"),
-    i18n: true,
     rank: 15
   },
   children: [
     {
       path: "/about/index",
-      name: "reAbout",
+      name: "About",
       component: () => import("/@/views/about/index.vue"),
       meta: {
-        title: $t("menus.hsAbout"),
-        i18n: true
+        title: $t("menus.hsAbout")
       }
     }
   ]

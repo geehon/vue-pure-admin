@@ -1,7 +1,12 @@
 <script setup lang="ts">
+import Sortable from "sortablejs";
 import { ref, onMounted } from "vue";
 import draggable from "vuedraggable/src/vuedraggable";
 import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
+
+defineOptions({
+  name: "Draggable"
+});
 
 let gridLists = ref<Array<Object>>([
   { grid: "cn", num: 1 },
@@ -35,8 +40,6 @@ const change = (evt): void => {
 
 onMounted(() => {
   // 使用原生sortable实现元素位置切换
-  // @ts-ignore
-  // eslint-disable-next-line no-undef
   new Sortable(document.querySelector(".cut-container"), {
     swap: true,
     forceFallback: true,
@@ -51,15 +54,17 @@ onMounted(() => {
   <el-card>
     <template #header>
       <div class="card-header">
-        <span
-          >拖拽组件，采用开源的<el-link
+        <span>
+          拖拽组件，采用开源的
+          <el-link
             href="https://sortablejs.github.io/vue.draggable.next/#/simple"
             target="_blank"
             :icon="useRenderIcon('rank')"
             style="font-size: 16px; margin: 0 4px 5px"
-            >vuedraggable</el-link
-          ></span
-        >
+          >
+            vuedraggable
+          </el-link>
+        </span>
       </div>
     </template>
     <div class="drag-container">

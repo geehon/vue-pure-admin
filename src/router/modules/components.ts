@@ -1,34 +1,30 @@
 import { $t } from "/@/plugins/i18n";
-const Layout = () => import("/@/layout/index.vue");
+import type { RouteConfigsTable } from "/#/index";
 
-const componentsRouter = {
+const componentsRouter: RouteConfigsTable = {
   path: "/components",
-  component: Layout,
   redirect: "/components/video",
   meta: {
     icon: "menu",
     title: $t("menus.hscomponents"),
-    i18n: true,
     rank: 5
   },
   children: [
     {
       path: "/components/video",
-      name: "video",
+      name: "Video",
       component: () => import("/@/views/components/video/index.vue"),
       meta: {
-        title: $t("menus.hsvideo"),
-        i18n: true
+        title: $t("menus.hsvideo")
       }
     },
     {
       path: "/components/map",
-      name: "map",
+      name: "Map",
       component: () => import("/@/views/components/map/index.vue"),
       meta: {
         title: $t("menus.hsmap"),
         keepAlive: true,
-        i18n: true,
         transition: {
           name: "fade"
         }
@@ -36,25 +32,22 @@ const componentsRouter = {
     },
     {
       path: "/components/draggable",
-      name: "draggable",
+      name: "Draggable",
       component: () => import("/@/views/components/draggable/index.vue"),
       meta: {
         title: $t("menus.hsdraggable"),
-        i18n: true,
         transition: {
           enterTransition: "animate__zoomIn",
           leaveTransition: "animate__zoomOut"
         }
       }
     },
-
     {
       path: "/components/splitPane",
-      name: "splitPane",
+      name: "SplitPane",
       component: () => import("/@/views/components/split-pane/index.vue"),
       meta: {
         title: $t("menus.hssplitPane"),
-        i18n: true,
         extraIcon: {
           svg: true,
           name: "team-iconxinpinrenqiwang"
@@ -63,56 +56,50 @@ const componentsRouter = {
     },
     {
       path: "/components/button",
-      name: "button",
+      name: "Button",
       component: () => import("/@/views/components/button/index.vue"),
       meta: {
-        title: $t("menus.hsbutton"),
-        i18n: true
+        title: $t("menus.hsbutton")
       }
     },
     {
       path: "/components/cropping",
-      name: "cropping",
+      name: "Cropping",
       component: () => import("/@/views/components/cropping/index.vue"),
       meta: {
-        title: $t("menus.hscropping"),
-        i18n: true
+        title: $t("menus.hscropping")
       }
     },
     {
       path: "/components/countTo",
-      name: "countTo",
+      name: "CountTo",
       component: () => import("/@/views/components/count-to/index.vue"),
       meta: {
-        title: $t("menus.hscountTo"),
-        i18n: true
+        title: $t("menus.hscountTo")
       }
     },
     {
       path: "/components/selector",
-      name: "selector",
+      name: "Selector",
       component: () => import("/@/views/components/selector/index.vue"),
       meta: {
-        title: $t("menus.hsselector"),
-        i18n: true
+        title: $t("menus.hsselector")
       }
     },
     {
       path: "/components/seamlessScroll",
-      name: "seamlessScroll",
+      name: "SeamlessScroll",
       component: () => import("/@/views/components/seamless-scroll/index.vue"),
       meta: {
-        title: $t("menus.hsseamless"),
-        i18n: true
+        title: $t("menus.hsseamless")
       }
     },
     {
       path: "/components/contextmenu",
-      name: "contextmenu",
+      name: "ContextMenu",
       component: () => import("/@/views/components/contextmenu/index.vue"),
       meta: {
-        title: $t("menus.hscontextmenu"),
-        i18n: true
+        title: $t("menus.hscontextmenu")
       }
     }
   ]

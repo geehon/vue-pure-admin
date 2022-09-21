@@ -4,49 +4,43 @@ import { MockMethod } from "vite-plugin-mock";
 // http://mockjs.com/examples.html#Object
 const systemRouter = {
   path: "/system",
-  redirect: "/system/user/index",
   meta: {
     icon: "setting",
     title: "menus.hssysManagement",
-    i18n: true,
     rank: 11
   },
   children: [
     {
       path: "/system/user/index",
-      name: "user",
+      name: "User",
       meta: {
         icon: "flUser",
-        title: "menus.hsUser",
-        i18n: true
+        title: "menus.hsUser"
       }
     },
     {
       path: "/system/role/index",
-      name: "role",
+      name: "Role",
       meta: {
         icon: "role",
-        title: "menus.hsRole",
-        i18n: true
+        title: "menus.hsRole"
       }
     },
     {
       path: "/system/dept/index",
-      name: "dept",
+      name: "Dept",
       meta: {
         icon: "dept",
-        title: "menus.hsDept",
-        i18n: true
+        title: "menus.hsDept"
       }
     },
     {
       path: "/system/dict",
       component: "/system/dict/index",
-      name: "dict",
+      name: "Dict",
       meta: {
         icon: "dict",
         title: "menus.hsDict",
-        i18n: true,
         keepAlive: true
       }
     }
@@ -55,28 +49,24 @@ const systemRouter = {
 
 const permissionRouter = {
   path: "/permission",
-  redirect: "/permission/page/index",
   meta: {
     title: "menus.permission",
     icon: "lollipop",
-    i18n: true,
     rank: 7
   },
   children: [
     {
       path: "/permission/page/index",
-      name: "permissionPage",
+      name: "PermissionPage",
       meta: {
-        title: "menus.permissionPage",
-        i18n: true
+        title: "menus.permissionPage"
       }
     },
     {
       path: "/permission/button/index",
-      name: "permissionButton",
+      name: "PermissionButton",
       meta: {
         title: "menus.permissionButton",
-        i18n: true,
         authority: []
       }
     }
@@ -85,38 +75,33 @@ const permissionRouter = {
 
 const frameRouter = {
   path: "/iframe",
-  redirect: "/iframe/pure",
   meta: {
     icon: "monitor",
     title: "menus.hsExternalPage",
-    i18n: true,
     rank: 10
   },
   children: [
     {
       path: "/iframe/pure",
-      name: "reFramePure",
+      name: "FramePure",
       meta: {
-        i18n: true,
         title: "menus.hsPureDocument",
-        frameSrc: "https://pure-admin-doc.vercel.app"
+        frameSrc: "http://yiming_chang.gitee.io/pure-admin-doc"
       }
     },
     {
       path: "/external",
-      name: "https://pure-admin-doc.vercel.app",
+      name: "http://yiming_chang.gitee.io/pure-admin-doc",
       meta: {
-        title: "menus.externalLink",
-        i18n: true
+        title: "menus.externalLink"
       }
     },
     {
       path: "/iframe/ep",
-      name: "reFrameEp",
+      name: "FrameEp",
       meta: {
-        i18n: true,
         title: "menus.hsEpDocument",
-        frameSrc: "https://element-plus.gitee.io/zh-CN/"
+        frameSrc: "https://element-plus.org/zh-CN/"
       }
     }
   ]
@@ -124,31 +109,33 @@ const frameRouter = {
 
 const tabsRouter = {
   path: "/tabs",
-  redirect: "/tabs/index",
   meta: {
     icon: "IF-team-icontabs",
     title: "menus.hstabs",
-    i18n: true,
     rank: 13
   },
   children: [
     {
       path: "/tabs/index",
-      name: "reTabs",
+      name: "Tabs",
       meta: {
-        title: "menus.hstabs",
-        i18n: true
+        title: "menus.hstabs"
       }
     },
     {
-      path: "/tabs/detail",
-      name: "tabDetail",
+      path: "/tabs/query-detail",
+      name: "TabQueryDetail",
       meta: {
-        title: "",
-        showLink: false,
-        i18n: false,
-        dynamicLevel: 3,
-        refreshRedirect: "/tabs/index"
+        // 不在menu菜单中显示
+        showLink: false
+      }
+    },
+    {
+      path: "/tabs/params-detail/:id",
+      component: "params-detail",
+      name: "TabParamsDetail",
+      meta: {
+        showLink: false
       }
     }
   ]

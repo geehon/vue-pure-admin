@@ -7,13 +7,11 @@ import Menu from "@iconify-icons/ep/menu";
 import HomeFilled from "@iconify-icons/ep/home-filled";
 import SetUp from "@iconify-icons/ep/set-up";
 import Edit from "@iconify-icons/ep/edit";
-import Setting from "@iconify-icons/ep/setting";
 import Lollipop from "@iconify-icons/ep/lollipop";
 import Link from "@iconify-icons/ep/link";
 import Position from "@iconify-icons/ep/position";
 import Histogram from "@iconify-icons/ep/histogram";
 import RefreshRight from "@iconify-icons/ep/refresh-right";
-import ArrowDown from "@iconify-icons/ep/arrow-down";
 import Close from "@iconify-icons/ep/close";
 import CloseBold from "@iconify-icons/ep/close-bold";
 import Bell from "@iconify-icons/ep/bell";
@@ -36,13 +34,11 @@ addIcon("menu", Menu);
 addIcon("home-filled", HomeFilled);
 addIcon("set-up", SetUp);
 addIcon("edit", Edit);
-addIcon("setting", Setting);
 addIcon("lollipop", Lollipop);
 addIcon("link", Link);
 addIcon("position", Position);
 addIcon("histogram", Histogram);
 addIcon("refresh-right", RefreshRight);
-addIcon("arrow-down", ArrowDown);
 addIcon("close", Close);
 addIcon("close-bold", CloseBold);
 addIcon("bell", Bell);
@@ -87,6 +83,16 @@ import Ppt from "@iconify-icons/ri/file-ppt-2-line";
 import TerminalWindowLine from "@iconify-icons/ri/terminal-window-line";
 import User from "@iconify-icons/ri/user-3-fill";
 import Lock from "@iconify-icons/ri/lock-fill";
+import MenuUnfold from "@iconify-icons/ri/menu-unfold-fill";
+import MenuFold from "@iconify-icons/ri/menu-fold-fill";
+import Setting from "@iconify-icons/ri/settings-3-line";
+import ArrowDown from "@iconify-icons/ri/arrow-down-s-line";
+import CloseLeftTags from "@iconify-icons/ri/text-direction-r";
+import CloseRightTags from "@iconify-icons/ri/text-direction-l";
+import CloseOtherTags from "@iconify-icons/ri/text-spacing";
+import CloseAllTags from "@iconify-icons/ri/subtract-line";
+import Fullscreen from "@iconify-icons/ri/fullscreen-fill";
+import ExitFullscreen from "@iconify-icons/ri/fullscreen-exit-fill";
 addIcon("arrow-right-s-line", ArrowRightSLine);
 addIcon("arrow-left-s-line", ArrowLeftSLine);
 addIcon("logout-circle-r-line", LogoutCircleRLine);
@@ -112,6 +118,16 @@ addIcon("ppt", Ppt);
 addIcon("terminal-window-line", TerminalWindowLine);
 addIcon("user", User);
 addIcon("lock", Lock);
+addIcon("menu-unfold", MenuUnfold);
+addIcon("menu-fold", MenuFold);
+addIcon("setting", Setting);
+addIcon("arrow-down", ArrowDown);
+addIcon("close-left-tags", CloseLeftTags);
+addIcon("close-right-tags", CloseRightTags);
+addIcon("close-other-tags", CloseOtherTags);
+addIcon("close-all-tags", CloseAllTags);
+addIcon("fullscreen", Fullscreen);
+addIcon("exit-fullscreen", ExitFullscreen);
 
 // Font Awesome 4
 import FaUser from "@iconify-icons/fa/user";
@@ -147,7 +163,7 @@ addIcon("location-company", LocationCompany);
 
 // Iconify Icon在Vue里离线使用（用于内网环境）https://docs.iconify.design/icon-components/vue/offline.html
 export default defineComponent({
-  name: "IconifyIcon",
+  name: "IconifyIconOffline",
   components: { IconifyIcon },
   props: {
     icon: {
@@ -161,6 +177,9 @@ export default defineComponent({
       IconifyIcon,
       {
         icon: `${this.icon}`,
+        style: attrs?.style
+          ? Object.assign(attrs.style, { outline: "none" })
+          : { outline: "none" },
         ...attrs
       },
       {

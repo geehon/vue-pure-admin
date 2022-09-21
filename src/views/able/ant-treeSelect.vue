@@ -2,6 +2,10 @@
 import { ref } from "vue";
 import { TreeSelect } from "@pureadmin/components";
 
+defineOptions({
+  name: "AntTreeSelect"
+});
+
 const value1 = ref<string>("");
 const treeData1 = ref([
   {
@@ -42,8 +46,7 @@ function dig(path = "0", level = 3) {
     };
 
     if (level > 0) {
-      // @ts-expect-error
-      treeNode.children = dig(value, level - 1);
+      (treeNode as any).children = dig(value, level - 1);
     }
 
     list.push(treeNode);
@@ -107,8 +110,7 @@ const onLoadData = treeNode => {
   return new Promise(resolve => {
     const { id } = treeNode.dataRef;
     setTimeout(() => {
-      // @ts-expect-error
-      treeData3.value = treeData3.value.concat([
+      treeData3.value = (treeData3 as any).value.concat([
         genTreeNode(id, false),
         genTreeNode(id, true)
       ]);
@@ -122,26 +124,32 @@ const onLoadData = treeNode => {
   <el-card>
     <template #header>
       <div class="card-header">
-        <span class="font-medium"
-          >仿antdv树选择，采用<el-link
+        <span class="font-medium">
+          仿antdv树选择，采用
+          <el-link
             href="https://www.npmjs.com/package/@pureadmin/components"
             target="_blank"
             style="font-size: 16px; margin: 0 4px 5px"
-            >@pureadmin/components</el-link
-          >，完全兼容antdv的<el-link
+          >
+            @pureadmin/components
+          </el-link>
+          ，完全兼容antdv的
+          <el-link
             href="https://next.antdv.com/components/tree-select-cn"
             target="_blank"
             style="font-size: 16px; margin: 0 4px 5px"
-            >TreeSelect</el-link
-          >写法</span
-        >
+          >
+            TreeSelect
+          </el-link>
+          写法
+        </span>
       </div>
     </template>
     <div class="flex justify-around flex-wrap">
       <div>
         <span>线性样式：</span>
         <TreeSelect
-          class="w-200px"
+          class="w-[200px]"
           v-model:value="value1"
           show-search
           :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
@@ -161,7 +169,7 @@ const onLoadData = treeNode => {
       <div>
         <span>虚拟滚动：</span>
         <TreeSelect
-          class="w-200px mt-6"
+          class="w-[200px] mt-6"
           v-model:value="checkedKeys"
           tree-checkable
           tree-default-expand-all
@@ -171,9 +179,9 @@ const onLoadData = treeNode => {
           :max-tag-count="10"
         >
           <template #title="{ title, value }">
-            <span v-if="value === '0-0-1-0'" style="color: #1890ff">{{
-              title
-            }}</span>
+            <span v-if="value === '0-0-1-0'" style="color: #1890ff">
+              {{ title }}
+            </span>
             <template v-else>{{ title }}</template>
           </template>
         </TreeSelect>
@@ -182,7 +190,7 @@ const onLoadData = treeNode => {
       <div>
         <span>可勾选：</span>
         <TreeSelect
-          class="w-200px"
+          class="w-[200px]"
           v-model:value="value2"
           :tree-data="treeData2"
           tree-checkable
@@ -195,7 +203,7 @@ const onLoadData = treeNode => {
       <div>
         <span>异步加载：</span>
         <TreeSelect
-          class="w-200px"
+          class="w-[200px]"
           v-model:value="value3"
           tree-data-simple-mode
           :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"

@@ -1,5 +1,4 @@
 import { resolve } from "path";
-import Unocss from "unocss/vite";
 import vue from "@vitejs/plugin-vue";
 import { viteBuildInfo } from "./info";
 import svgLoader from "vite-svg-loader";
@@ -11,6 +10,7 @@ import { visualizer } from "rollup-plugin-visualizer";
 import removeConsole from "vite-plugin-remove-console";
 import themePreprocessorPlugin from "@pureadmin/theme";
 import { genScssMultipleScopeVars } from "/@/layout/theme";
+import DefineOptions from "unplugin-vue-define-options/vite";
 
 export function getPluginsList(command, VITE_LEGACY) {
   const prodMock = true;
@@ -25,9 +25,9 @@ export function getPluginsList(command, VITE_LEGACY) {
     }),
     // jsx、tsx语法支持
     vueJsx(),
-    Unocss(),
+    DefineOptions(),
     // 线上环境删除console
-    removeConsole(),
+    removeConsole({ external: ["src/assets/iconfont/iconfont.js"] }),
     viteBuildInfo(),
     // 自定义主题
     themePreprocessorPlugin({

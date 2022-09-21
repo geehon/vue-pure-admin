@@ -1,55 +1,30 @@
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
-import { useNav } from "../../hooks/nav";
+import { ref, watch } from "vue";
 import Search from "../search/index.vue";
 import Notice from "../notice/index.vue";
-import { templateRef } from "@vueuse/core";
 import SidebarItem from "./sidebarItem.vue";
 import avatars from "/@/assets/avatars.jpg";
-import screenfull from "../screenfull/index.vue";
-import { useRoute, useRouter } from "vue-router";
-import { deviceDetection } from "/@/utils/deviceDetection";
-import { watch, nextTick, onMounted, getCurrentInstance } from "vue";
+import { useNav } from "/@/layout/hooks/useNav";
+import { useTranslationLang } from "../../hooks/useTranslationLang";
 import { usePermissionStoreHook } from "/@/store/modules/permission";
 import globalization from "/@/assets/svg/globalization.svg?component";
 
-const route = useRoute();
-const { locale, t } = useI18n();
-const routers = useRouter().options.routes;
-const menuRef = templateRef<ElRef | null>("menu", null);
-const instance =
-  getCurrentInstance().appContext.config.globalProperties.$storage;
-const title =
-  getCurrentInstance().appContext.config.globalProperties.$config?.Title;
+const menuRef = ref();
 
+const { t, route, locale, translationCh, translationEn } =
+  useTranslationLang(menuRef);
 const {
+  title,
+  routers,
   logout,
   backHome,
   onPanel,
-  changeTitle,
-  handleResize,
   menuSelect,
   username,
   avatarsStyle,
   getDropdownItemStyle,
-  changeWangeditorLanguage
+  getDropdownItemClass
 } = useNav();
-
-onMounted(() => {
-  nextTick(() => {
-    handleResize(menuRef.value);
-  });
-});
-
-watch(
-  () => locale.value,
-  () => {
-    changeTitle(route.meta);
-    locale.value === "en"
-      ? changeWangeditorLanguage(locale.value)
-      : changeWangeditorLanguage("zh-CN");
-  }
-);
 
 watch(
   () => route.path,
@@ -57,18 +32,6 @@ watch(
     menuSelect(route.path, routers);
   }
 );
-
-function translationCh() {
-  instance.locale = { locale: "zh" };
-  locale.value = "zh";
-  handleResize(menuRef.value);
-}
-
-function translationEn() {
-  instance.locale = { locale: "en" };
-  locale.value = "en";
-  handleResize(menuRef.value);
-}
 </script>
 
 <template>
@@ -78,11 +41,11 @@ function translationEn() {
       <h4>{{ title }}</h4>
     </div>
     <el-menu
-      ref="menu"
-      class="horizontal-header-menu"
-      mode="horizontal"
-      :default-active="route.path"
       router
+      ref="menuRef"
+      mode="horizontal"
+      class="horizontal-header-menu"
+      :default-active="route.path"
       @select="indexPath => menuSelect(indexPath, routers)"
     >
       <sidebar-item
@@ -97,37 +60,41 @@ function translationEn() {
       <Search />
       <!-- 通知 -->
       <Notice id="header-notice" />
-      <!-- 全屏 -->
-      <screenfull id="header-screenfull" v-show="!deviceDetection()" />
       <!-- 国际化 -->
       <el-dropdown id="header-translation" trigger="click">
-        <globalization />
+        <globalization
+          class="navbar-bg-hover w-[40px] h-[48px] p-[11px] cursor-pointer outline-none"
+        />
         <template #dropdown>
           <el-dropdown-menu class="translation">
             <el-dropdown-item
               :style="getDropdownItemStyle(locale, 'zh')"
+              :class="['dark:!text-white', getDropdownItemClass(locale, 'zh')]"
               @click="translationCh"
             >
               <span class="check-zh" v-show="locale === 'zh'">
-                <IconifyIconOffline icon="check" /> </span
-              >简体中文
+                <IconifyIconOffline icon="check" />
+              </span>
+              简体中文
             </el-dropdown-item>
             <el-dropdown-item
               :style="getDropdownItemStyle(locale, 'en')"
+              :class="['dark:!text-white', getDropdownItemClass(locale, 'en')]"
               @click="translationEn"
             >
               <span class="check-en" v-show="locale === 'en'">
-                <IconifyIconOffline icon="check" /> </span
-              >English</el-dropdown-item
-            >
+                <IconifyIconOffline icon="check" />
+              </span>
+              English
+            </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <!-- 退出登陆 -->
+      <!-- 退出登录 -->
       <el-dropdown trigger="click">
-        <span class="el-dropdown-link">
+        <span class="el-dropdown-link navbar-bg-hover">
           <img v-if="avatars" :src="avatars" :style="avatarsStyle" />
-          <p v-if="username">{{ username }}</p>
+          <p v-if="username" class="dark:text-white">{{ username }}</p>
         </span>
         <template #dropdown>
           <el-dropdown-menu class="logout">
@@ -136,13 +103,13 @@ function translationEn() {
                 icon="logout-circle-r-line"
                 style="margin: 5px"
               />
-              {{ t("buttons.hsLoginOut") }}</el-dropdown-item
-            >
+              {{ t("buttons.hsLoginOut") }}
+            </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
       <span
-        class="el-icon-setting"
+        class="set-icon navbar-bg-hover"
         :title="t('buttons.hssystemSet')"
         @click="onPanel"
       >

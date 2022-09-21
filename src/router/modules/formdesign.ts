@@ -1,24 +1,21 @@
 import { $t } from "/@/plugins/i18n";
-const Layout = () => import("/@/layout/index.vue");
+import type { RouteConfigsTable } from "/#/index";
 
-const formDesignRouter = {
+const formDesignRouter: RouteConfigsTable = {
   path: "/formDesign",
-  component: Layout,
   redirect: "/formDesign/index",
   meta: {
     icon: "terminal-window-line",
     title: $t("menus.hsFormDesign"),
-    i18n: true,
     rank: 2
   },
   children: [
     {
       path: "/formDesign/index",
-      name: "formDesign",
+      name: "FormDesign",
       component: () => import("/@/views/form-design/index.vue"),
       meta: {
-        title: $t("menus.hsFormDesign"),
-        i18n: true
+        title: $t("menus.hsFormDesign")
       }
     }
   ]

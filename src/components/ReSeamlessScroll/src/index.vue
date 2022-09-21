@@ -11,6 +11,10 @@ import * as utilsMethods from "./utils";
 const { animationFrame, copyObj } = utilsMethods;
 animationFrame();
 
+defineOptions({
+  name: "ReSeamlessScroll"
+});
+
 const props = defineProps({
   data: {
     type: Array as PropType<unknown>
@@ -102,7 +106,7 @@ let defaultOption = computed(() => {
 });
 
 let options = computed(() => {
-  // @ts-ignore
+  // @ts-expect-error
   return copyObj({}, unref(defaultOption), classOption);
 });
 
@@ -162,8 +166,8 @@ let autoPlay = computed(() => {
 });
 
 let scrollSwitch = computed(() => {
-  // 从 props 解构出来的 属性 不再具有相应性.
-  return props.data.length >= unref(options).limitMoveNum;
+  // 从 props 解构出来的 属性 不再具有响应性.
+  return (props.data as any).length >= unref(options).limitMoveNum;
 });
 
 let hoverStopSwitch = computed(() => {
@@ -424,7 +428,7 @@ function scrollInitMove() {
       if (timer) clearTimeout(timer);
       copyHtml.value = unref(slotList).innerHTML;
       setTimeout(() => {
-        realBoxHeight.value = unref(realBox).offsetHeight;
+        realBoxHeight.value = unref(realBox)?.offsetHeight;
         scrollMove();
       }, 0);
     } else {
@@ -450,7 +454,6 @@ function scrollStopMove() {
 
 // 鼠标滚轮事件
 function wheel(e) {
-  e.preventDefault();
   if (
     unref(options).direction === "left" ||
     unref(options).direction === "right"
@@ -513,10 +516,10 @@ defineExpose({
       :style="pos"
       @mouseenter="enter"
       @mouseleave="leave"
-      @touchstart="touchStart"
-      @touchmove="touchMove"
+      @touchstart.passive="touchStart"
+      @touchmove.passive="touchMove"
       @touchend="touchEnd"
-      @mousewheel="wheel"
+      @mousewheel.passive="wheel"
     >
       <div :ref="'slotList' + classOption['key']" :style="float">
         <slot />

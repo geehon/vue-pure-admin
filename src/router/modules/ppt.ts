@@ -1,25 +1,23 @@
-const Layout = () => import("/@/layout/index.vue");
+import type { RouteConfigsTable } from "/#/index";
 const IFrame = () => import("/@/layout/frameView.vue");
 
-const pptRouter = {
+const pptRouter: RouteConfigsTable = {
   path: "/ppt",
-  component: Layout,
   redirect: "/ppt/index",
   meta: {
     icon: "ppt",
     title: "PPT",
-    i18n: false,
     rank: 3
   },
   children: [
     {
       path: "/ppt/index",
-      name: "reFrameppt",
+      name: "FramePpt",
       component: IFrame,
       meta: {
         title: "PPT",
-        i18n: false,
         frameSrc: "https://pipipi-pikachu.github.io/PPTist/",
+        frameLoading: false,
         extraIcon: {
           svg: true,
           name: "team-iconxinpin"

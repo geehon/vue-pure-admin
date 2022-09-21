@@ -1,7 +1,6 @@
-import { emitter } from "/@/utils/mitt";
-import { IconifyIconOffline } from "../../ReIcon";
 import { defineComponent, ref, computed, PropType } from "vue";
 import { useEpThemeStoreHook } from "/@/store/modules/epTheme";
+import { IconifyIconOffline } from "../../ReIcon";
 
 export const loadingSvg = `
   <path class="path" d="
@@ -44,13 +43,12 @@ const props = {
 };
 
 export default defineComponent({
-  name: "epTableProBar",
+  name: "TableProBar",
   props,
   emits: ["refresh"],
   setup(props, { emit, slots, attrs }) {
     const buttonRef = ref();
     const checkList = ref([]);
-    const currentWidth = ref(0);
     const size = ref("default");
     const isExpandAll = ref(true);
 
@@ -59,7 +57,7 @@ export default defineComponent({
         return {
           background:
             s === size.value ? useEpThemeStoreHook().epThemeColor : "",
-          color: s === size.value ? "#f4f4f5" : "#000"
+          color: s === size.value ? "#fff" : "var(--el-text-color-primary)"
         };
       };
     });
@@ -77,12 +75,6 @@ export default defineComponent({
         }
       });
     }
-
-    // 监听容器
-    emitter.on("resize", ({ detail }) => {
-      const { width } = detail;
-      currentWidth.value = width;
-    });
 
     const dropdown = {
       dropdown: () => (
@@ -112,10 +104,10 @@ export default defineComponent({
     const reference = {
       reference: () => (
         <IconifyIconOffline
-          class="cursor-pointer outline-none"
+          class="cursor-pointer"
           icon="setting"
           width="16"
-          color="#606266"
+          color="text_color_regular"
           onMouseover={e => (buttonRef.value = e.currentTarget)}
         />
       )
@@ -125,15 +117,13 @@ export default defineComponent({
       <>
         <div
           {...attrs}
-          class="w-99/100 mt-6 p-2 bg-white"
+          class="w-[99/100] mt-6 p-2 bg-bg_color"
           v-loading={props.loading}
           element-loading-svg={loadingSvg}
           element-loading-svg-view-box="-10, -10, 50, 50"
         >
-          <div class="flex justify-between w-full h-60px p-4">
-            <p class="font-bold">
-              {currentWidth.value > 390 ? props.title : "列表"}
-            </p>
+          <div class="flex justify-between w-full h-[60px] p-4">
+            <p class="font-bold truncate">{props.title}</p>
             <div class="flex items-center justify-around">
               <div class="flex mr-4">{slots?.buttons()}</div>
               {props.tableRef?.size ? (
@@ -144,10 +134,10 @@ export default defineComponent({
                     placement="top"
                   >
                     <IconifyIconOffline
-                      class="cursor-pointer outline-none"
+                      class="cursor-pointer"
                       icon={isExpandAll.value ? "unExpand" : "expand"}
                       width="16"
-                      color="#606266"
+                      color="text_color_regular"
                       onClick={() => onExpand()}
                     />
                   </el-tooltip>
@@ -156,10 +146,10 @@ export default defineComponent({
               ) : undefined}
               <el-tooltip effect="dark" content="刷新" placement="top">
                 <IconifyIconOffline
-                  class="cursor-pointer outline-none"
+                  class="cursor-pointer"
                   icon="refresh-right"
                   width="16"
-                  color="#606266"
+                  color="text_color_regular"
                   onClick={() => emit("refresh")}
                 />
               </el-tooltip>
@@ -168,10 +158,10 @@ export default defineComponent({
               <el-tooltip effect="dark" content="密度" placement="top">
                 <el-dropdown v-slots={dropdown} trigger="click">
                   <IconifyIconOffline
-                    class="cursor-pointer outline-none"
+                    class="cursor-pointer"
                     icon="density"
                     width="16"
-                    color="#606266"
+                    color="text_color_regular"
                   />
                 </el-dropdown>
               </el-tooltip>

@@ -1,22 +1,23 @@
 <script setup lang="ts">
-import { ref, nextTick, getCurrentInstance } from "vue";
+import { ref, nextTick } from "vue";
 import Cropper from "/@/components/ReCropper";
 import img from "./picture.jpeg";
 
+defineOptions({
+  name: "Cropping"
+});
+
+let refCropper = ref();
 let info = ref<object>(null);
 let cropperImg = ref<string>("");
-const instance = getCurrentInstance();
 
 const onCropper = (): void => {
   nextTick(() => {
-    // @ts-expect-error
-    instance.refs.refCropper.cropper.getCroppedCanvas().toBlob(blob => {
+    refCropper.value.cropper.getCroppedCanvas().toBlob(blob => {
       let fileReader: FileReader = new FileReader();
       fileReader.onloadend = (e: ProgressEvent) => {
-        // @ts-ignore
-        cropperImg.value = e.target.result;
-        // @ts-expect-error
-        info.value = instance.refs.refCropper.cropper.getData();
+        cropperImg.value = (e.target as any).result;
+        info.value = refCropper.value.cropper.getData();
       };
       fileReader.readAsDataURL(blob);
     }, "image/jpeg");

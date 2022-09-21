@@ -2,7 +2,11 @@
 import Print from "/@/utils/print";
 import { reactive, ref } from "vue";
 import { VxeTablePropTypes } from "vxe-table";
-import { ReLine } from "/@/components/ReCharts/index";
+import Line from "../welcome/components/Line.vue";
+
+defineOptions({
+  name: "Print"
+});
 
 interface User {
   date: string;
@@ -190,11 +194,10 @@ const tableData: User[] = [
       >
         <p class="font-medium pt-1">Element-Plus Table</p>
         <el-table
-          class="el-table"
-          :data="tableData"
           border
-          style="margin: 40px auto; width: 100%"
+          :data="tableData"
           :row-class-name="tableRowClassName"
+          class="el-table w-full mt-[40px] mr-[40px]"
         >
           <el-table-column prop="date" label="Date" width="180" />
           <el-table-column prop="name" label="Name" width="180" />
@@ -267,7 +270,7 @@ const tableData: User[] = [
         }"
       >
         <p class="font-medium pt-1">Echart</p>
-        <ReLine class="echart" style="margin: 0 auto" />
+        <Line class="echart" style="margin: 0 auto" />
       </el-col>
 
       <el-col

@@ -11,6 +11,10 @@ import { Snapshot, BpmnElement, Menu } from "@logicflow/extension";
 import { Control, NodePanel, DataDialog } from "/@/components/ReFlowChart";
 import { toLogicflowData } from "/@/components/ReFlowChart/src/adpterForTurbo";
 
+defineOptions({
+  name: "FlowChart"
+});
+
 let lf = ref(null);
 let graphData = ref(null);
 let dataVisible = ref<boolean>(false);
@@ -62,15 +66,17 @@ onMounted(() => {
   <el-card>
     <template #header>
       <div class="card-header">
-        <span class="font-medium"
-          >流程图组件，采用开源的<el-link
+        <span class="font-medium">
+          流程图组件，采用开源的
+          <el-link
             href="http://logic-flow.org/"
             target="_blank"
             :icon="useRenderIcon('set-up')"
             style="font-size: 16px; margin: 0 4px 5px"
-            >LogicFlow</el-link
-          ></span
-        >
+          >
+            LogicFlow
+          </el-link>
+        </span>
       </div>
     </template>
     <div class="logic-flow-view">
