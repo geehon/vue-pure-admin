@@ -1,18 +1,20 @@
 <script setup lang="ts">
 import Search from "../search/index.vue";
 import Notice from "../notice/index.vue";
-import avatars from "/@/assets/avatars.jpg";
-import { useNav } from "/@/layout/hooks/useNav";
-import { transformI18n } from "/@/plugins/i18n";
-import { ref, toRaw, watch, onMounted } from "vue";
-import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
-import { getParentPaths, findRouteByPath } from "/@/router/utils";
+import { useNav } from "@/layout/hooks/useNav";
+import { transformI18n } from "@/plugins/i18n";
+import { ref, toRaw, watch, onMounted, nextTick } from "vue";
+import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import { getParentPaths, findRouteByPath } from "@/router/utils";
 import { useTranslationLang } from "../../hooks/useTranslationLang";
-import { usePermissionStoreHook } from "/@/store/modules/permission";
-import globalization from "/@/assets/svg/globalization.svg?component";
+import { usePermissionStoreHook } from "@/store/modules/permission";
+import globalization from "@/assets/svg/globalization.svg?component";
+import LogoutCircleRLine from "@iconify-icons/ri/logout-circle-r-line";
+import Setting from "@iconify-icons/ri/settings-3-line";
+import Check from "@iconify-icons/ep/check";
 
 const menuRef = ref();
-let defaultActive = ref(null);
+const defaultActive = ref(null);
 
 const { t, route, locale, translationCh, translationEn } =
   useTranslationLang(menuRef);
@@ -43,8 +45,12 @@ onMounted(() => {
   getDefaultActive(route.path);
 });
 
+nextTick(() => {
+  menuRef.value?.handleResize();
+});
+
 watch(
-  () => route.path,
+  () => [route.path, usePermissionStoreHook().wholeMenus],
   () => {
     getDefaultActive(route.path);
   }
@@ -52,7 +58,11 @@ watch(
 </script>
 
 <template>
-  <div v-if="device !== 'mobile'" class="horizontal-header">
+  <div
+    v-if="device !== 'mobile'"
+    class="horizontal-header"
+    v-loading="usePermissionStoreHook().wholeMenus.length === 0"
+  >
     <el-menu
       router
       ref="menuRef"
@@ -105,7 +115,7 @@ watch(
               @click="translationCh"
             >
               <span class="check-zh" v-show="locale === 'zh'">
-                <IconifyIconOffline icon="check" />
+                <IconifyIconOffline :icon="Check" />
               </span>
               简体中文
             </el-dropdown-item>
@@ -115,7 +125,7 @@ watch(
               @click="translationEn"
             >
               <span class="check-en" v-show="locale === 'en'">
-                <IconifyIconOffline icon="check" />
+                <IconifyIconOffline :icon="Check" />
               </span>
               English
             </el-dropdown-item>
@@ -124,15 +134,18 @@ watch(
       </el-dropdown>
       <!-- 退出登录 -->
       <el-dropdown trigger="click">
-        <span class="el-dropdown-link navbar-bg-hover">
-          <img v-if="avatars" :src="avatars" :style="avatarsStyle" />
+        <span class="el-dropdown-link navbar-bg-hover select-none">
+          <img
+            src="https://avatars.githubusercontent.com/u/44761321?v=4"
+            :style="avatarsStyle"
+          />
           <p v-if="username" class="dark:text-white">{{ username }}</p>
         </span>
         <template #dropdown>
           <el-dropdown-menu class="logout">
             <el-dropdown-item @click="logout">
               <IconifyIconOffline
-                icon="logout-circle-r-line"
+                :icon="LogoutCircleRLine"
                 style="margin: 5px"
               />
               {{ t("buttons.hsLoginOut") }}
@@ -145,13 +158,17 @@ watch(
         :title="t('buttons.hssystemSet')"
         @click="onPanel"
       >
-        <IconifyIconOffline icon="setting" />
+        <IconifyIconOffline :icon="Setting" />
       </span>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+:deep(.el-loading-mask) {
+  opacity: 0.45;
+}
+
 .translation {
   ::v-deep(.el-dropdown-menu__item) {
     padding: 5px 40px;

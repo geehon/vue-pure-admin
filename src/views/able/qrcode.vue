@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { ref, unref } from "vue";
-import { ElMessage } from "element-plus";
-import avatars from "/@/assets/avatars.jpg";
-import ReQrcode from "/@/components/ReQrcode";
+import { message } from "@/utils/message";
+import ReQrcode from "@/components/ReQrcode";
 
 defineOptions({
   name: "QrCode"
@@ -15,10 +14,10 @@ setTimeout(() => {
   asyncTitle.value = unref(qrcodeText);
 }, 3000);
 const codeClick = () => {
-  ElMessage.info("点击事件");
+  message("点击事件", { type: "info" });
 };
 const disabledClick = () => {
-  ElMessage.info("失效");
+  message("失效", { type: "info" });
 };
 </script>
 
@@ -90,7 +89,10 @@ const disabledClick = () => {
         <el-col :xl="6" :lg="6" :md="12" :sm="24" :xs="24">
           <el-card shadow="hover" class="mb-[10px] text-center">
             <div class="font-bold">logo配置</div>
-            <ReQrcode :text="qrcodeText" :logo="avatars" />
+            <ReQrcode
+              :text="qrcodeText"
+              logo="https://avatars.githubusercontent.com/u/44761321?v=4"
+            />
           </el-card>
         </el-col>
         <el-col :xl="6" :lg="6" :md="12" :sm="24" :xs="24">
@@ -99,7 +101,7 @@ const disabledClick = () => {
             <ReQrcode
               :text="qrcodeText"
               :logo="{
-                src: avatars,
+                src: 'https://avatars.githubusercontent.com/u/44761321?v=4',
                 logoSize: 0.2,
                 borderSize: 0.05,
                 borderRadius: 50,

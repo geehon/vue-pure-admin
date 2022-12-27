@@ -1,19 +1,35 @@
-import { $t } from "/@/plugins/i18n";
-import type { RouteConfigsTable } from "/#/index";
+import { $t } from "@/plugins/i18n";
+import { components } from "@/router/enums";
 
-const componentsRouter: RouteConfigsTable = {
+export default {
   path: "/components",
   redirect: "/components/video",
   meta: {
     icon: "menu",
     title: $t("menus.hscomponents"),
-    rank: 5
+    rank: components
   },
   children: [
     {
+      path: "/components/message",
+      name: "Message",
+      component: () => import("@/views/components/message/index.vue"),
+      meta: {
+        title: $t("menus.hsmessage"),
+        extraIcon: {
+          svg: true,
+          name: "team-iconxinpinrenqiwang"
+        },
+        transition: {
+          enterTransition: "animate__fadeInLeft",
+          leaveTransition: "animate__fadeOutRight"
+        }
+      }
+    },
+    {
       path: "/components/video",
       name: "Video",
-      component: () => import("/@/views/components/video/index.vue"),
+      component: () => import("@/views/components/video/index.vue"),
       meta: {
         title: $t("menus.hsvideo")
       }
@@ -21,7 +37,7 @@ const componentsRouter: RouteConfigsTable = {
     {
       path: "/components/map",
       name: "Map",
-      component: () => import("/@/views/components/map/index.vue"),
+      component: () => import("@/views/components/map/index.vue"),
       meta: {
         title: $t("menus.hsmap"),
         keepAlive: true,
@@ -33,7 +49,7 @@ const componentsRouter: RouteConfigsTable = {
     {
       path: "/components/draggable",
       name: "Draggable",
-      component: () => import("/@/views/components/draggable/index.vue"),
+      component: () => import("@/views/components/draggable/index.vue"),
       meta: {
         title: $t("menus.hsdraggable"),
         transition: {
@@ -45,19 +61,15 @@ const componentsRouter: RouteConfigsTable = {
     {
       path: "/components/splitPane",
       name: "SplitPane",
-      component: () => import("/@/views/components/split-pane/index.vue"),
+      component: () => import("@/views/components/split-pane/index.vue"),
       meta: {
-        title: $t("menus.hssplitPane"),
-        extraIcon: {
-          svg: true,
-          name: "team-iconxinpinrenqiwang"
-        }
+        title: $t("menus.hssplitPane")
       }
     },
     {
       path: "/components/button",
       name: "Button",
-      component: () => import("/@/views/components/button/index.vue"),
+      component: () => import("@/views/components/button/index.vue"),
       meta: {
         title: $t("menus.hsbutton")
       }
@@ -65,7 +77,7 @@ const componentsRouter: RouteConfigsTable = {
     {
       path: "/components/cropping",
       name: "Cropping",
-      component: () => import("/@/views/components/cropping/index.vue"),
+      component: () => import("@/views/components/cropping/index.vue"),
       meta: {
         title: $t("menus.hscropping")
       }
@@ -73,7 +85,7 @@ const componentsRouter: RouteConfigsTable = {
     {
       path: "/components/countTo",
       name: "CountTo",
-      component: () => import("/@/views/components/count-to/index.vue"),
+      component: () => import("@/views/components/count-to/index.vue"),
       meta: {
         title: $t("menus.hscountTo")
       }
@@ -81,7 +93,7 @@ const componentsRouter: RouteConfigsTable = {
     {
       path: "/components/selector",
       name: "Selector",
-      component: () => import("/@/views/components/selector/index.vue"),
+      component: () => import("@/views/components/selector/index.vue"),
       meta: {
         title: $t("menus.hsselector")
       }
@@ -89,7 +101,7 @@ const componentsRouter: RouteConfigsTable = {
     {
       path: "/components/seamlessScroll",
       name: "SeamlessScroll",
-      component: () => import("/@/views/components/seamless-scroll/index.vue"),
+      component: () => import("@/views/components/seamless-scroll/index.vue"),
       meta: {
         title: $t("menus.hsseamless")
       }
@@ -97,12 +109,34 @@ const componentsRouter: RouteConfigsTable = {
     {
       path: "/components/contextmenu",
       name: "ContextMenu",
-      component: () => import("/@/views/components/contextmenu/index.vue"),
+      component: () => import("@/views/components/contextmenu/index.vue"),
       meta: {
         title: $t("menus.hscontextmenu")
       }
+    },
+    {
+      path: "/components/typeit",
+      name: "Typeit",
+      component: () => import("@/views/components/typeit/index.vue"),
+      meta: {
+        title: $t("menus.hstypeit")
+      }
+    },
+    {
+      path: "/components/json-editor",
+      name: "JsonEditor",
+      component: () => import("@/views/components/json-editor/index.vue"),
+      meta: {
+        title: $t("menus.hsjsoneditor")
+      }
+    },
+    {
+      path: "/components/danmaku",
+      name: "Danmaku",
+      component: () => import("@/views/components/danmaku/index.vue"),
+      meta: {
+        title: $t("menus.hsdanmaku")
+      }
     }
   ]
-};
-
-export default componentsRouter;
+} as RouteConfigsTable;

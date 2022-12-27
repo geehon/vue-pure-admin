@@ -1,19 +1,19 @@
-import { $t } from "/@/plugins/i18n";
-import type { RouteConfigsTable } from "/#/index";
+import { $t } from "@/plugins/i18n";
+import { list } from "@/router/enums";
 
-const ableRouter: RouteConfigsTable = {
+export default {
   path: "/list",
   redirect: "/list/card",
   meta: {
-    icon: "list-check",
+    icon: "listCheck",
     title: $t("menus.hsList"),
-    rank: 12
+    rank: list
   },
   children: [
     {
       path: "/list/card",
       name: "ListCard",
-      component: () => import("/@/views/list/card/index.vue"),
+      component: () => import("@/views/list/card/index.vue"),
       meta: {
         icon: "card",
         title: $t("menus.hsListCard"),
@@ -21,6 +21,4 @@ const ableRouter: RouteConfigsTable = {
       }
     }
   ]
-};
-
-export default ableRouter;
+} as RouteConfigsTable;

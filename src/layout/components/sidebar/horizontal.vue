@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
 import Search from "../search/index.vue";
 import Notice from "../notice/index.vue";
+import { ref, watch, nextTick } from "vue";
 import SidebarItem from "./sidebarItem.vue";
-import avatars from "/@/assets/avatars.jpg";
-import { useNav } from "/@/layout/hooks/useNav";
+import { useNav } from "@/layout/hooks/useNav";
 import { useTranslationLang } from "../../hooks/useTranslationLang";
-import { usePermissionStoreHook } from "/@/store/modules/permission";
-import globalization from "/@/assets/svg/globalization.svg?component";
+import { usePermissionStoreHook } from "@/store/modules/permission";
+import globalization from "@/assets/svg/globalization.svg?component";
+import LogoutCircleRLine from "@iconify-icons/ri/logout-circle-r-line";
+import Setting from "@iconify-icons/ri/settings-3-line";
+import Check from "@iconify-icons/ep/check";
 
 const menuRef = ref();
 
@@ -26,6 +28,10 @@ const {
   getDropdownItemClass
 } = useNav();
 
+nextTick(() => {
+  menuRef.value?.handleResize();
+});
+
 watch(
   () => route.path,
   () => {
@@ -35,7 +41,10 @@ watch(
 </script>
 
 <template>
-  <div class="horizontal-header">
+  <div
+    v-loading="usePermissionStoreHook().wholeMenus.length === 0"
+    class="horizontal-header"
+  >
     <div class="horizontal-header-left" @click="backHome">
       <FontIcon icon="team-iconlogo" svg style="width: 35px; height: 35px" />
       <h4>{{ title }}</h4>
@@ -73,7 +82,7 @@ watch(
               @click="translationCh"
             >
               <span class="check-zh" v-show="locale === 'zh'">
-                <IconifyIconOffline icon="check" />
+                <IconifyIconOffline :icon="Check" />
               </span>
               简体中文
             </el-dropdown-item>
@@ -83,7 +92,7 @@ watch(
               @click="translationEn"
             >
               <span class="check-en" v-show="locale === 'en'">
-                <IconifyIconOffline icon="check" />
+                <IconifyIconOffline :icon="Check" />
               </span>
               English
             </el-dropdown-item>
@@ -93,14 +102,17 @@ watch(
       <!-- 退出登录 -->
       <el-dropdown trigger="click">
         <span class="el-dropdown-link navbar-bg-hover">
-          <img v-if="avatars" :src="avatars" :style="avatarsStyle" />
+          <img
+            src="https://avatars.githubusercontent.com/u/44761321?v=4"
+            :style="avatarsStyle"
+          />
           <p v-if="username" class="dark:text-white">{{ username }}</p>
         </span>
         <template #dropdown>
           <el-dropdown-menu class="logout">
             <el-dropdown-item @click="logout">
               <IconifyIconOffline
-                icon="logout-circle-r-line"
+                :icon="LogoutCircleRLine"
                 style="margin: 5px"
               />
               {{ t("buttons.hsLoginOut") }}
@@ -113,13 +125,17 @@ watch(
         :title="t('buttons.hssystemSet')"
         @click="onPanel"
       >
-        <IconifyIconOffline icon="setting" />
+        <IconifyIconOffline :icon="Setting" />
       </span>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+:deep(.el-loading-mask) {
+  opacity: 0.45;
+}
+
 .translation {
   ::v-deep(.el-dropdown-menu__item) {
     padding: 5px 40px;

@@ -8,32 +8,37 @@
 
 ## Introduction
 
-vue-pure-admin is a free and open source middle and back-end template. Using the latest `vue3` `vite2` `Element-Plus` `TypeScript` and other mainstream technology development, the out-of-the-box middle and back-end front-end solutions can also be used for learning reference.
+`vue-pure-admin` is an open source free and out-of-the-box middle and background management system template. Developed using the latest mainstream technologies such as `Vue3`, `Vite`, `Element-Plus`, `TypeScript`, `Pinia`, `Tailwindcss`
+
+## Thin version (offering non-internationalized and internationalized versions)
+
+The simplified version is based on the shelf extracted from [vue-pure-admin](https://github.com/xiaoxian521/vue-pure-admin), which contains main functions and is more suitable for actual project development. The packaged size is introduced globally [element-plus](https://element-plus.org) is still below `2.3MB`, and the full version of the code will be permanently synchronized. After enabling `brotli` compression and `cdn` to replace the local library mode, the package size is less than `350kb`
+
+- [Click me to view the non-internationalized version](https://github.com/xiaoxian521/pure-admin-thin)
+- [Click me to view Internationalization version](https://github.com/xiaoxian521/pure-admin-thin/tree/i18n)
 
 ## Supporting Video
 
-- [Click Watch Tutorial](https://www.bilibili.com/video/BV1534y1S7HV)
+- [Click Watch Tutorial](https://www.bilibili.com/video/BV1kg411v7QT)
 - [Click Watch UI Design](https://www.bilibili.com/video/BV17g411T7rq)
 
-## Docs
+## Docs (support `PWA` fast, offline access)
 
-- [Click me to view the domestic documentation site](http://yiming_chang.gitee.io/pure-admin-doc)
-- [Click me to view foreign document site 1](https://xiaoxian521.github.io/pure-admin-doc)
-- [Click me to view foreign document site 2](https://pure-admin-doc.vercel.app)
-
-## Thin
-
-- [Click Watch Thin](https://github.com/xiaoxian521/pure-admin-thin)
+- [Click me to view the domestic documentation site](https://yiming_chang.gitee.io/pure-admin-doc)
+- [Click me to view foreign document site](https://xiaoxian521.github.io/pure-admin-doc)
 
 ## Tauri
 
 - [Click Watch Tauri](https://github.com/xiaoxian521/tauri-pure-admin)
 
+## Electron
+
+- [Click Watch Electron](https://github.com/xiaoxian521/electron-pure-admin)
+
 ## Preview
 
-- [Click me to view the domestic preview station](http://yiming_chang.gitee.io/vue-pure-admin)
-- [Click me to view foreign preview site 1](https://xiaoxian521.github.io/vue-pure-admin)
-- [Click me to view foreign preview station 2](https://vue-pure-admin.vercel.app)
+- [Click me to view the domestic preview station](https://yiming_chang.gitee.io/vue-pure-admin)
+- [Click me to view foreign preview site](https://xiaoxian521.github.io/vue-pure-admin)
 
 - PC
 <p align="center">
@@ -159,6 +164,18 @@ Thank you very much for your support, I believe the project will get better and 
 
 ## Contributors
 
-This project exists thanks to all the people who contribute :heart:
+Thanks to all the people who contribute :heart:
 
 <a href="https://github.com/xiaoxian521/vue-pure-admin/graphs/contributors"><img src="https://contrib.rocks/image?repo=xiaoxian521/vue-pure-admin" /></a>
+
+## `Star`
+
+Many thanks to the kind individuals who leave a star. Your support is much appreciated :heart:
+
+[![Stargazers for vue-pure-admin](https://reporoster.com/stars/xiaoxian521/vue-pure-admin)](https://github.com/xiaoxian521/vue-pure-admin/stargazers)
+
+## `Fork`
+
+It's so cool that you study hard :heart:
+
+[![Forkers repo roster for vue-pure-admin](https://reporoster.com/forks/xiaoxian521/vue-pure-admin)](https://github.com/xiaoxian521/vue-pure-admin/network/members)

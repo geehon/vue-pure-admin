@@ -6,19 +6,8 @@ import {
   reactive,
   computed,
   nextTick,
-  useCssModule
+  onBeforeMount
 } from "vue";
-import { getConfig } from "/@/config";
-import { useRouter } from "vue-router";
-import panel from "../panel/index.vue";
-import { emitter } from "/@/utils/mitt";
-import { resetRouter } from "/@/router";
-import { templateRef } from "@vueuse/core";
-import { routerArrays } from "/@/layout/types";
-import { useNav } from "/@/layout/hooks/useNav";
-import { useAppStoreHook } from "/@/store/modules/app";
-import { useMultiTagsStoreHook } from "/@/store/modules/multiTags";
-import { useDataThemeChange } from "/@/layout/hooks/useDataThemeChange";
 import {
   useDark,
   debounce,
@@ -26,23 +15,34 @@ import {
   storageLocal,
   storageSession
 } from "@pureadmin/utils";
+import { getConfig } from "@/config";
+import { useRouter } from "vue-router";
+import panel from "../panel/index.vue";
+import { emitter } from "@/utils/mitt";
+import { resetRouter } from "@/router";
+import { removeToken } from "@/utils/auth";
+import { routerArrays } from "@/layout/types";
+import { useNav } from "@/layout/hooks/useNav";
+import { useAppStoreHook } from "@/store/modules/app";
 import { toggleTheme } from "@pureadmin/theme/dist/browser-utils";
+import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
+import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
 
-import dayIcon from "/@/assets/svg/day.svg?component";
-import darkIcon from "/@/assets/svg/dark.svg?component";
+import dayIcon from "@/assets/svg/day.svg?component";
+import darkIcon from "@/assets/svg/dark.svg?component";
+import Check from "@iconify-icons/ep/check";
+import Logout from "@iconify-icons/ri/logout-circle-r-line";
 
 const router = useRouter();
-const { device } = useNav();
 const { isDark } = useDark();
-const { isSelect } = useCssModule();
+const { device, tooltipEffect } = useNav();
 const { $storage } = useGlobal<GlobalPropertiesApi>();
 
-const mixRef = templateRef<HTMLElement | null>("mixRef", null);
-const verticalRef = templateRef<HTMLElement | null>("verticalRef", null);
-const horizontalRef = templateRef<HTMLElement | null>("horizontalRef", null);
+const mixRef = ref();
+const verticalRef = ref();
+const horizontalRef = ref();
 
 const {
-  body,
   dataTheme,
   layoutTheme,
   themeColors,
@@ -53,8 +53,8 @@ const {
 
 /* body添加layout属性，作用于src/style/sidebar.scss */
 if (unref(layoutTheme)) {
-  let layout = unref(layoutTheme).layout;
-  let theme = unref(layoutTheme).theme;
+  const layout = unref(layoutTheme).layout;
+  const theme = unref(layoutTheme).theme;
   toggleTheme({
     scopeName: `layout-theme-${theme}`
   });
@@ -118,29 +118,30 @@ const weekChange = (value): void => {
 };
 
 const tagsChange = () => {
-  let showVal = settings.tabsVal;
+  const showVal = settings.tabsVal;
   storageConfigureChange("hideTabs", showVal);
   emitter.emit("tagViewsChange", showVal as unknown as string);
 };
 
 const multiTagsCacheChange = () => {
-  let multiTagsCache = settings.multiTagsCache;
+  const multiTagsCache = settings.multiTagsCache;
   storageConfigureChange("multiTagsCache", multiTagsCache);
   useMultiTagsStoreHook().multiTagsCacheChange(multiTagsCache);
 };
 
 /** 清空缓存并返回登录页 */
 function onReset() {
-  router.push("/login");
+  removeToken();
+  storageLocal().clear();
+  storageSession().clear();
   const { Grey, Weak, MultiTagsCache, EpThemeColor, Layout } = getConfig();
   useAppStoreHook().setLayout(Layout);
   setEpThemeColor(EpThemeColor);
   useMultiTagsStoreHook().multiTagsCacheChange(MultiTagsCache);
   toggleClass(Grey, "html-grey", document.querySelector("html"));
   toggleClass(Weak, "html-weakness", document.querySelector("html"));
+  router.push("/login");
   useMultiTagsStoreHook().handleTags("equal", [...routerArrays]);
-  storageLocal.clear();
-  storageSession.clear();
   resetRouter();
 }
 
@@ -159,31 +160,9 @@ function logoChange() {
 
 function setFalse(Doms): any {
   Doms.forEach(v => {
-    toggleClass(false, isSelect, unref(v));
+    toggleClass(false, "is-select", unref(v));
   });
 }
-
-watch($storage, ({ layout }) => {
-  /* 设置wangeditorV5主题色 */
-  body.style.setProperty("--w-e-toolbar-active-color", layout["epThemeColor"]);
-  switch (layout["layout"]) {
-    case "vertical":
-      toggleClass(true, isSelect, unref(verticalRef));
-      debounce(setFalse([horizontalRef]), 50);
-      debounce(setFalse([mixRef]), 50);
-      break;
-    case "horizontal":
-      toggleClass(true, isSelect, unref(horizontalRef));
-      debounce(setFalse([verticalRef]), 50);
-      debounce(setFalse([mixRef]), 50);
-      break;
-    case "mix":
-      toggleClass(true, isSelect, unref(mixRef));
-      debounce(setFalse([verticalRef]), 50);
-      debounce(setFalse([horizontalRef]), 50);
-      break;
-  }
-});
 
 /** 主题色 激活选择项 */
 const getThemeColor = computed(() => {
@@ -218,14 +197,36 @@ function setLayoutModel(layout: string) {
   useAppStoreHook().setLayout(layout);
 }
 
-/* 初始化项目配置 */
-nextTick(() => {
-  settings.greyVal &&
-    document.querySelector("html")?.setAttribute("class", "html-grey");
-  settings.weakVal &&
-    document.querySelector("html")?.setAttribute("class", "html-weakness");
-  settings.tabsVal && tagsChange();
+watch($storage, ({ layout }) => {
+  switch (layout["layout"]) {
+    case "vertical":
+      toggleClass(true, "is-select", unref(verticalRef));
+      debounce(setFalse([horizontalRef]), 50);
+      debounce(setFalse([mixRef]), 50);
+      break;
+    case "horizontal":
+      toggleClass(true, "is-select", unref(horizontalRef));
+      debounce(setFalse([verticalRef]), 50);
+      debounce(setFalse([mixRef]), 50);
+      break;
+    case "mix":
+      toggleClass(true, "is-select", unref(mixRef));
+      debounce(setFalse([verticalRef]), 50);
+      debounce(setFalse([horizontalRef]), 50);
+      break;
+  }
+});
+
+onBeforeMount(() => {
   dataThemeChange();
+  /* 初始化项目配置 */
+  nextTick(() => {
+    settings.greyVal &&
+      document.querySelector("html")?.setAttribute("class", "html-grey");
+    settings.weakVal &&
+      document.querySelector("html")?.setAttribute("class", "html-weakness");
+    settings.tabsVal && tagsChange();
+  });
 });
 </script>
 
@@ -243,9 +244,15 @@ nextTick(() => {
 
     <el-divider>导航栏模式</el-divider>
     <ul class="pure-theme">
-      <el-tooltip class="item" content="左侧模式" placement="bottom">
+      <el-tooltip
+        :effect="tooltipEffect"
+        class="item"
+        content="左侧模式"
+        placement="bottom"
+        popper-class="pure-tooltip"
+      >
         <li
-          :class="layoutTheme.layout === 'vertical' ? $style.isSelect : ''"
+          :class="layoutTheme.layout === 'vertical' ? 'is-select' : ''"
           ref="verticalRef"
           @click="setLayoutModel('vertical')"
         >
@@ -256,12 +263,14 @@ nextTick(() => {
 
       <el-tooltip
         v-if="device !== 'mobile'"
+        :effect="tooltipEffect"
         class="item"
         content="顶部模式"
         placement="bottom"
+        popper-class="pure-tooltip"
       >
         <li
-          :class="layoutTheme.layout === 'horizontal' ? $style.isSelect : ''"
+          :class="layoutTheme.layout === 'horizontal' ? 'is-select' : ''"
           ref="horizontalRef"
           @click="setLayoutModel('horizontal')"
         >
@@ -272,12 +281,14 @@ nextTick(() => {
 
       <el-tooltip
         v-if="device !== 'mobile'"
+        :effect="tooltipEffect"
         class="item"
         content="混合模式"
         placement="bottom"
+        popper-class="pure-tooltip"
       >
         <li
-          :class="layoutTheme.layout === 'mix' ? $style.isSelect : ''"
+          :class="layoutTheme.layout === 'mix' ? 'is-select' : ''"
           ref="mixRef"
           @click="setLayoutModel('mix')"
         >
@@ -301,7 +312,7 @@ nextTick(() => {
           :size="17"
           :color="getThemeColor(item.themeColor)"
         >
-          <IconifyIconOffline icon="check" />
+          <IconifyIconOffline :icon="Check" />
         </el-icon>
       </li>
     </ul>
@@ -382,7 +393,7 @@ nextTick(() => {
       @click="onReset"
     >
       <IconifyIconOffline
-        icon="fa-sign-out"
+        :icon="Logout"
         width="15"
         height="15"
         style="margin-right: 4px"
@@ -392,13 +403,16 @@ nextTick(() => {
   </panel>
 </template>
 
-<style scoped module>
-.isSelect {
+<style lang="scss" scoped>
+:deep(.el-divider__text) {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.is-select {
   border: 2px solid var(--el-color-primary);
 }
-</style>
 
-<style lang="scss" scoped>
 .setting {
   width: 100%;
 
@@ -408,11 +422,6 @@ nextTick(() => {
     align-items: center;
     margin: 25px;
   }
-}
-
-:deep(.el-divider__text) {
-  font-size: 16px;
-  font-weight: 700;
 }
 
 .pure-datatheme {

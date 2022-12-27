@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { isEqual } from "lodash-unified";
-import { transformI18n } from "/@/plugins/i18n";
+import { isEqual } from "@pureadmin/utils";
+import { transformI18n } from "@/plugins/i18n";
 import { ref, watch, onMounted, toRaw } from "vue";
-import { getParentPaths, findRouteByPath } from "/@/router/utils";
-import { useMultiTagsStoreHook } from "/@/store/modules/multiTags";
+import { getParentPaths, findRouteByPath } from "@/router/utils";
+import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { useRoute, useRouter, RouteLocationMatched } from "vue-router";
 
 const route = useRoute();
@@ -97,8 +97,12 @@ watch(
 
 <template>
   <el-breadcrumb class="!leading-[50px] select-none" separator="/">
-    <transition-group appear name="breadcrumb">
-      <el-breadcrumb-item v-for="item in levelList" :key="item.path">
+    <transition-group name="breadcrumb">
+      <el-breadcrumb-item
+        class="!inline !items-stretch"
+        v-for="item in levelList"
+        :key="item.path"
+      >
         <a @click.prevent="handleLink(item)">
           {{ transformI18n(item.meta.title) }}
         </a>

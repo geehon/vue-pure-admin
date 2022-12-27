@@ -1,24 +1,18 @@
 <script setup lang="ts">
-import { ElMessage } from "element-plus";
-import { debounce } from "@pureadmin/utils";
-import { useDebounceFn, useThrottleFn } from "@vueuse/core";
+import { message } from "@/utils/message";
+import { debounce, throttle } from "@pureadmin/utils";
 
 defineOptions({
   name: "Debounce"
 });
 
-const handle = () => {
-  ElMessage({
-    message: "恭喜你，这是一条成功消息",
-    type: "success"
-  });
-};
+const handle = () => message("恭喜你，这是一条成功消息", { type: "success" });
 
 const immediateDebounce = debounce(handle, 1000, true);
 
-const debounceClick = useDebounceFn(handle, 1000);
+const debounceClick = debounce(handle, 1000);
 
-const throttleClick = useThrottleFn(handle, 1000, false);
+const throttleClick = throttle(handle);
 </script>
 
 <template>
@@ -52,5 +46,3 @@ const throttleClick = useThrottleFn(handle, 1000, false);
     </el-card>
   </div>
 </template>
-
-<style scoped></style>

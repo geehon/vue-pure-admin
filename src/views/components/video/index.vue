@@ -5,7 +5,8 @@ import volume from "xgplayer/es/controls/volume";
 import { deviceDetection } from "@pureadmin/utils";
 import screenShot from "xgplayer/es/controls/screenShot";
 import playbackRate from "xgplayer/es/controls/playbackRate";
-import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
+import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import VideoPlay from "@iconify-icons/ep/video-play";
 
 defineOptions({
   name: "Video"
@@ -38,12 +39,12 @@ onMounted(() => {
           <el-link
             href="https://v2.h5player.bytedance.com"
             target="_blank"
-            :icon="useRenderIcon('video-play')"
+            :icon="useRenderIcon(VideoPlay)"
             style="font-size: 16px; margin: 0 4px 5px"
           >
             西瓜播放器
-          </el-link></span
-        >
+          </el-link>
+        </span>
       </div>
     </template>
     <div id="mse" />

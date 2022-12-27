@@ -1,80 +1,45 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import tree from "./tree.vue";
-import { useColumns } from "./columns";
-import { getUserList } from "/@/api/system";
-import { reactive, ref, onMounted } from "vue";
-import { type FormInstance } from "element-plus";
-import { TableProBar } from "/@/components/ReTable";
-import { type PaginationProps } from "@pureadmin/table";
-import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
+import { useUser } from "./hook";
+import { PureTableBar } from "@/components/RePureTableBar";
+import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+
+import Role from "@iconify-icons/ri/admin-line";
+import Password from "@iconify-icons/ri/lock-password-line";
+import More from "@iconify-icons/ep/more-filled";
+import Delete from "@iconify-icons/ep/delete";
+import EditPen from "@iconify-icons/ep/edit-pen";
+import Search from "@iconify-icons/ep/search";
+import Refresh from "@iconify-icons/ep/refresh";
+import AddFill from "@iconify-icons/ri/add-circle-line";
 
 defineOptions({
   name: "User"
 });
 
-const form = reactive({
-  username: "",
-  mobile: "",
-  status: ""
-});
-let dataList = ref([]);
-let loading = ref(true);
-const { columns } = useColumns();
-
-const formRef = ref<FormInstance>();
-
-const pagination = reactive<PaginationProps>({
-  total: 0,
-  pageSize: 10,
-  currentPage: 1,
-  background: true
-});
-
-function handleUpdate(row) {
-  console.log(row);
-}
-
-function handleDelete(row) {
-  console.log(row);
-}
-
-function handleCurrentChange(val: number) {
-  console.log(`current page: ${val}`);
-}
-
-function handleSizeChange(val: number) {
-  console.log(`${val} items per page`);
-}
-
-function handleSelectionChange(val) {
-  console.log("handleSelectionChange", val);
-}
-
-async function onSearch() {
-  loading.value = true;
-  let { data } = await getUserList();
-  dataList.value = data.list;
-  pagination.total = data.total;
-  setTimeout(() => {
-    loading.value = false;
-  }, 500);
-}
-
-const resetForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return;
-  formEl.resetFields();
-  onSearch();
-};
-
-onMounted(() => {
-  onSearch();
-});
+const formRef = ref();
+const {
+  form,
+  loading,
+  columns,
+  dataList,
+  pagination,
+  buttonClass,
+  onSearch,
+  resetForm,
+  handleUpdate,
+  handleDelete,
+  handleSizeChange,
+  handleCurrentChange,
+  handleSelectionChange
+} = useUser();
 </script>
 
 <template>
-  <div class="main flex">
-    <tree />
-    <div class="flex-1 ml-4">
+  <div class="main">
+    <tree class="w-[17%] float-left" />
+    <div class="float-right w-[81%]">
       <el-form
         ref="formRef"
         :inline="true"
@@ -86,6 +51,7 @@ onMounted(() => {
             v-model="form.username"
             placeholder="请输入用户名称"
             clearable
+            class="!w-[160px]"
           />
         </el-form-item>
         <el-form-item label="手机号码：" prop="mobile">
@@ -93,10 +59,16 @@ onMounted(() => {
             v-model="form.mobile"
             placeholder="请输入手机号码"
             clearable
+            class="!w-[160px]"
           />
         </el-form-item>
         <el-form-item label="状态：" prop="status">
-          <el-select v-model="form.status" placeholder="请选择" clearable>
+          <el-select
+            v-model="form.status"
+            placeholder="请选择"
+            clearable
+            class="!w-[160px]"
+          >
             <el-option label="已开启" value="1" />
             <el-option label="已关闭" value="0" />
           </el-select>
@@ -104,37 +76,30 @@ onMounted(() => {
         <el-form-item>
           <el-button
             type="primary"
-            :icon="useRenderIcon('search')"
+            :icon="useRenderIcon(Search)"
             :loading="loading"
             @click="onSearch"
           >
             搜索
           </el-button>
-          <el-button
-            :icon="useRenderIcon('refresh')"
-            @click="resetForm(formRef)"
-          >
+          <el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)">
             重置
           </el-button>
         </el-form-item>
       </el-form>
 
-      <TableProBar
-        title="用户管理"
-        :loading="loading"
-        :dataList="dataList"
-        @refresh="onSearch"
-      >
+      <PureTableBar title="用户管理" @refresh="onSearch">
         <template #buttons>
-          <el-button type="primary" :icon="useRenderIcon('add')">
+          <el-button type="primary" :icon="useRenderIcon(AddFill)">
             新增用户
           </el-button>
         </template>
         <template v-slot="{ size, checkList }">
-          <PureTable
+          <pure-table
             border
-            align="center"
+            align-whole="center"
             table-layout="auto"
+            :loading="loading"
             :size="size"
             :data="dataList"
             :columns="columns"
@@ -156,7 +121,7 @@ onMounted(() => {
                 type="primary"
                 :size="size"
                 @click="handleUpdate(row)"
-                :icon="useRenderIcon('edits')"
+                :icon="useRenderIcon(EditPen)"
               >
                 修改
               </el-button>
@@ -167,7 +132,7 @@ onMounted(() => {
                     link
                     type="primary"
                     :size="size"
-                    :icon="useRenderIcon('delete')"
+                    :icon="useRenderIcon(Delete)"
                     @click="handleDelete(row)"
                   >
                     删除
@@ -176,33 +141,33 @@ onMounted(() => {
               </el-popconfirm>
               <el-dropdown>
                 <el-button
-                  class="ml-3"
+                  class="ml-3 mt-[2px]"
                   link
                   type="primary"
                   :size="size"
                   @click="handleUpdate(row)"
-                  :icon="useRenderIcon('more')"
+                  :icon="useRenderIcon(More)"
                 />
                 <template #dropdown>
                   <el-dropdown-menu>
                     <el-dropdown-item>
                       <el-button
-                        class="reset-margin !h-[20px] !text-gray-500 dark:!text-white dark:hover:!text-primary"
+                        :class="buttonClass"
                         link
                         type="primary"
                         :size="size"
-                        :icon="useRenderIcon('password')"
+                        :icon="useRenderIcon(Password)"
                       >
                         重置密码
                       </el-button>
                     </el-dropdown-item>
                     <el-dropdown-item>
                       <el-button
-                        class="reset-margin !h-[20px] !text-gray-500 dark:!text-white dark:hover:!text-primary"
+                        :class="buttonClass"
                         link
                         type="primary"
                         :size="size"
-                        :icon="useRenderIcon('role')"
+                        :icon="useRenderIcon(Role)"
                       >
                         分配角色
                       </el-button>
@@ -211,9 +176,9 @@ onMounted(() => {
                 </template>
               </el-dropdown>
             </template>
-          </PureTable>
+          </pure-table>
         </template>
-      </TableProBar>
+      </PureTableBar>
     </div>
   </div>
 </template>

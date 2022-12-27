@@ -1,13 +1,15 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { useRouter } from "vue-router";
+import { cloneDeep } from "@pureadmin/utils";
 import SearchResult from "./SearchResult.vue";
 import SearchFooter from "./SearchFooter.vue";
-import { useNav } from "/@/layout/hooks/useNav";
-import { transformI18n } from "/@/plugins/i18n";
-import { deleteChildren } from "@pureadmin/utils";
+import { deleteChildren } from "@/utils/tree";
+import { useNav } from "@/layout/hooks/useNav";
+import { transformI18n } from "@/plugins/i18n";
 import { useDebounceFn, onKeyStroke } from "@vueuse/core";
 import { ref, watch, computed, nextTick, shallowRef } from "vue";
-import { usePermissionStoreHook } from "/@/store/modules/permission";
+import { usePermissionStoreHook } from "@/store/modules/permission";
+import Search from "@iconify-icons/ep/search";
 
 interface Props {
   /** 弹窗显隐 */
@@ -31,7 +33,7 @@ const handleSearch = useDebounceFn(search, 300);
 
 /** 菜单树形结构 */
 const menusData = computed(() => {
-  return deleteChildren(usePermissionStoreHook().menusTree);
+  return deleteChildren(cloneDeep(usePermissionStoreHook().wholeMenus));
 });
 
 const show = computed({
@@ -147,7 +149,7 @@ onKeyStroke("ArrowDown", handleDown);
     >
       <template #prefix>
         <span class="el-input__icon">
-          <IconifyIconOffline icon="search" />
+          <IconifyIconOffline :icon="Search" />
         </span>
       </template>
     </el-input>

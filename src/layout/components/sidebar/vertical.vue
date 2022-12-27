@@ -1,25 +1,25 @@
 <script setup lang="ts">
 import Logo from "./logo.vue";
 import { useRoute } from "vue-router";
-import { emitter } from "/@/utils/mitt";
+import { emitter } from "@/utils/mitt";
 import SidebarItem from "./sidebarItem.vue";
 import leftCollapse from "./leftCollapse.vue";
-import type { StorageConfigs } from "/#/index";
-import { useNav } from "/@/layout/hooks/useNav";
+import { useNav } from "@/layout/hooks/useNav";
 import { storageLocal } from "@pureadmin/utils";
 import { ref, computed, watch, onBeforeMount } from "vue";
-import { findRouteByPath, getParentPaths } from "/@/router/utils";
-import { usePermissionStoreHook } from "/@/store/modules/permission";
+import { findRouteByPath, getParentPaths } from "@/router/utils";
+import { usePermissionStoreHook } from "@/store/modules/permission";
 
 const route = useRoute();
 const showLogo = ref(
-  storageLocal.getItem<StorageConfigs>("responsive-configure")?.showLogo ?? true
+  storageLocal().getItem<StorageConfigs>("responsive-configure")?.showLogo ??
+    true
 );
 
 const { routers, device, pureApp, isCollapse, menuSelect, toggleSideBar } =
   useNav();
 
-let subMenuData = ref([]);
+const subMenuData = ref([]);
 
 const menuData = computed(() => {
   return pureApp.layout === "mix" && device.value !== "mobile"
@@ -27,7 +27,7 @@ const menuData = computed(() => {
     : usePermissionStoreHook().wholeMenus;
 });
 
-function getSubMenuData(path) {
+function getSubMenuData(path: string) {
   // path的上级路由组成的数组
   const parentPathArr = getParentPaths(
     path,
@@ -41,6 +41,7 @@ function getSubMenuData(path) {
   if (!parenetRoute?.children) return;
   subMenuData.value = parenetRoute?.children;
 }
+
 getSubMenuData(route.path);
 
 onBeforeMount(() => {
@@ -50,7 +51,7 @@ onBeforeMount(() => {
 });
 
 watch(
-  () => route.path,
+  () => [route.path, usePermissionStoreHook().wholeMenus],
   () => {
     getSubMenuData(route.path);
     menuSelect(route.path, routers);
@@ -59,7 +60,10 @@ watch(
 </script>
 
 <template>
-  <div :class="['sidebar-container', showLogo ? 'has-logo' : '']">
+  <div
+    v-loading="menuData.length === 0"
+    :class="['sidebar-container', showLogo ? 'has-logo' : '']"
+  >
     <Logo v-if="showLogo" :collapse="isCollapse" />
     <el-scrollbar
       wrap-class="scrollbar-wrapper"
@@ -91,3 +95,9 @@ watch(
     />
   </div>
 </template>
+
+<style scoped>
+:deep(.el-loading-mask) {
+  opacity: 0.45;
+}
+</style>

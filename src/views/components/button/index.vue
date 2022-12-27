@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { loadEnv } from "@build/index";
 
 defineOptions({
   name: "Button"
 });
 
-const { VITE_PUBLIC_PATH } = loadEnv();
+const { VITE_PUBLIC_PATH } = import.meta.env;
 
 const url = ref(`${VITE_PUBLIC_PATH}html/button.html`);
 </script>
@@ -21,9 +20,3 @@ const url = ref(`${VITE_PUBLIC_PATH}html/button.html`);
     <iframe :src="url" frameborder="0" class="iframe w-full h-[60vh]" />
   </el-card>
 </template>
-
-<style lang="scss" scoped>
-.iframe {
-  filter: invert(0.9) hue-rotate(180deg);
-}
-</style>

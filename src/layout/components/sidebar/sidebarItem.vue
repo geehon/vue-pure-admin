@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import path from "path";
+import { getConfig } from "@/config";
 import { childrenType } from "../../types";
-import { useNav } from "/@/layout/hooks/useNav";
-import { transformI18n } from "/@/plugins/i18n";
-import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
+import { useNav } from "@/layout/hooks/useNav";
+import { transformI18n } from "@/plugins/i18n";
+import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { ref, toRaw, PropType, nextTick, computed, CSSProperties } from "vue";
 
-const { layout, isCollapse } = useNav();
+import ArrowUp from "@iconify-icons/ep/arrow-up";
+import EpArrowDown from "@iconify-icons/ep/arrow-down";
+import ArrowLeft from "@iconify-icons/ep/arrow-left";
+import ArrowRight from "@iconify-icons/ep/arrow-right";
+
+const { layout, isCollapse, tooltipEffect } = useNav();
 
 const props = defineProps({
   item: {
@@ -76,6 +82,16 @@ const getSpanStyle = computed(() => {
   };
 });
 
+const expandCloseIcon = computed(() => {
+  if (!getConfig()?.MenuArrowIconNoTransition) return "";
+  return {
+    "expand-close-icon": useRenderIcon(EpArrowDown),
+    "expand-open-icon": useRenderIcon(ArrowUp),
+    "collapse-close-icon": useRenderIcon(ArrowRight),
+    "collapse-open-icon": useRenderIcon(ArrowLeft)
+  };
+});
+
 const onlyOneChild: childrenType = ref(null);
 // 存放菜单是否存在showTooltip属性标识
 const hoverMenuMap = new WeakMap();
@@ -128,7 +144,8 @@ function resolvePath(routePath) {
   if (httpReg.test(routePath) || httpReg.test(props.basePath)) {
     return routePath || props.basePath;
   } else {
-    return path.resolve(props.basePath, routePath);
+    // 使用path.posix.resolve替代path.resolve 避免windows环境下使用electron出现盘符问题
+    return path.posix.resolve(props.basePath, routePath);
   }
 }
 </script>
@@ -185,6 +202,7 @@ function resolvePath(routePath) {
           <el-tooltip
             v-else
             placement="top"
+            :effect="tooltipEffect"
             :offset="-10"
             :disabled="!onlyOneChild.showTooltip"
           >
@@ -212,7 +230,12 @@ function resolvePath(routePath) {
     </el-menu-item>
   </template>
 
-  <el-sub-menu v-else ref="subMenu" :index="resolvePath(props.item.path)">
+  <el-sub-menu
+    v-else
+    ref="subMenu"
+    v-bind="expandCloseIcon"
+    :index="resolvePath(props.item.path)"
+  >
     <template #title>
       <div v-if="toRaw(props.item.meta.icon)" class="sub-menu-icon">
         <component
@@ -225,8 +248,9 @@ function resolvePath(routePath) {
       <el-tooltip
         v-else
         placement="top"
+        :effect="tooltipEffect"
         :offset="-10"
-        :disabled="!isCollapse || !props.item.showTooltip"
+        :disabled="!props.item.showTooltip"
       >
         <template #content>
           {{ transformI18n(props.item.meta.title) }}

@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import Print from "/@/utils/print";
-import { reactive, ref } from "vue";
-import { VxeTablePropTypes } from "vxe-table";
+import { ref } from "vue";
+import Print from "@/utils/print";
 import Line from "../welcome/components/Line.vue";
 
 defineOptions({
@@ -14,43 +13,6 @@ interface User {
   address: string;
 }
 
-const demo1 = reactive({
-  tableData: [
-    {
-      id: 10001,
-      name: "Test1",
-      role: "Develop",
-      sex: "Man",
-      age: 28,
-      address: "test abc"
-    },
-    {
-      id: 10002,
-      name: "Test2",
-      role: "Test",
-      sex: "Women",
-      age: 22,
-      address: "Guangzhou"
-    },
-    {
-      id: 10003,
-      name: "Test3",
-      role: "PM",
-      sex: "Man",
-      age: 32,
-      address: "Shanghai"
-    },
-    {
-      id: 10004,
-      name: "Test4",
-      role: "Designer",
-      sex: "Women",
-      age: 24,
-      address: "Shanghai"
-    }
-  ]
-});
-
 const value = ref("1");
 
 const options = [
@@ -58,11 +20,6 @@ const options = [
     value: "1",
     el: ".el-table",
     label: "Element-Plus Table"
-  },
-  {
-    value: "2",
-    el: ".vxe-table",
-    label: "Vxe Table"
   },
   {
     value: "3",
@@ -77,41 +34,9 @@ const options = [
 ];
 
 function onPrint() {
-  let el = options.filter(v => v.value === value.value)[0]?.el;
+  const el = options.filter(v => v.value === value.value)[0]?.el;
   Print(el).toPrint;
 }
-
-const headerCellStyle: VxeTablePropTypes.HeaderCellStyle = ({ column }) => {
-  if (column.property === "name") {
-    return {
-      backgroundColor: "#f60",
-      color: "#ffffff"
-    };
-  }
-};
-
-const rowStyle: VxeTablePropTypes.RowStyle = ({ rowIndex }) => {
-  if ([2, 3, 5].includes(rowIndex)) {
-    return {
-      backgroundColor: "red",
-      color: "#ffffff"
-    };
-  }
-};
-
-const cellStyle: VxeTablePropTypes.CellStyle = ({ row, column }) => {
-  if (column.property === "sex") {
-    if (row.sex >= "1") {
-      return {
-        backgroundColor: "#187"
-      };
-    } else if (row.age === 26) {
-      return {
-        backgroundColor: "#2db7f5"
-      };
-    }
-  }
-};
 
 const tableRowClassName = ({ rowIndex }: { row: User; rowIndex: number }) => {
   if (rowIndex === 1) {
@@ -165,9 +90,9 @@ const tableData: User[] = [
               :value="item.value"
             />
           </el-select>
-          <el-button size="small" type="primary" @click="onPrint"
-            >打印</el-button
-          >
+          <el-button size="small" type="primary" @click="onPrint">
+            打印
+          </el-button>
         </div>
       </div>
     </template>
@@ -211,45 +136,6 @@ const tableData: User[] = [
         :md="11"
         :lg="11"
         :xl="11"
-        style="margin: 10px; border: 0.01rem solid var(--el-color-primary)"
-        v-motion
-        :initial="{
-          opacity: 0,
-          y: 100
-        }"
-        :enter="{
-          opacity: 1,
-          y: 0,
-          transition: {
-            delay: 200
-          }
-        }"
-      >
-        <p class="font-medium pt-1">Vxe Table</p>
-        <vxe-table
-          class="vxe-table"
-          border
-          style="margin: 40px auto"
-          :header-cell-style="headerCellStyle"
-          :row-style="rowStyle"
-          :cell-style="cellStyle"
-          :data="demo1.tableData"
-        >
-          <vxe-column type="seq" width="60" />
-          <vxe-column field="name" title="Name" />
-          <vxe-column field="sex" title="Sex" />
-          <vxe-column field="age" title="Age" />
-          <vxe-column field="attr1" title="Attr1" />
-          <vxe-column field="address" title="Address" show-overflow />
-        </vxe-table>
-      </el-col>
-
-      <el-col
-        :xs="22"
-        :sm="22"
-        :md="11"
-        :lg="11"
-        :xl="11"
         style="
           width: 200px;
           height: 300px;
@@ -270,7 +156,7 @@ const tableData: User[] = [
         }"
       >
         <p class="font-medium pt-1">Echart</p>
-        <Line class="echart" style="margin: 0 auto" />
+        <Line class="echart" style="margin: 0 auto; height: 300px" />
       </el-col>
 
       <el-col
@@ -300,7 +186,7 @@ const tableData: User[] = [
       >
         <p class="font-medium pt-1">Image</p>
         <img
-          src="../../assets/avatars.jpg"
+          src="https://avatars.githubusercontent.com/u/44761321?v=4"
           alt="avatars"
           class="img"
           style="width: 200px; height: 200px; margin: 50px auto"

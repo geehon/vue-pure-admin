@@ -1,27 +1,30 @@
 import { computed } from "vue";
-import { router } from "/@/router";
-import { getConfig } from "/@/config";
+import { storeToRefs } from "pinia";
+import { getConfig } from "@/config";
 import { useRouter } from "vue-router";
-import { emitter } from "/@/utils/mitt";
+import { emitter } from "@/utils/mitt";
 import { routeMetaType } from "../types";
-import type { StorageConfigs } from "/#/index";
-import { routerArrays } from "/@/layout/types";
-import { transformI18n } from "/@/plugins/i18n";
-import { useAppStoreHook } from "/@/store/modules/app";
-import { remainingPaths, resetRouter } from "/@/router";
-import { i18nChangeLanguage } from "@wangeditor/editor";
-import { storageSession, useGlobal } from "@pureadmin/utils";
-import { useEpThemeStoreHook } from "/@/store/modules/epTheme";
-import { useMultiTagsStoreHook } from "/@/store/modules/multiTags";
+import { useGlobal } from "@pureadmin/utils";
+import { transformI18n } from "@/plugins/i18n";
+import { router, remainingPaths } from "@/router";
+import { useAppStoreHook } from "@/store/modules/app";
+import { useUserStoreHook } from "@/store/modules/user";
+import { useEpThemeStoreHook } from "@/store/modules/epTheme";
+import { usePermissionStoreHook } from "@/store/modules/permission";
 
 const errorInfo = "当前路由配置不正确，请检查配置";
 
 export function useNav() {
   const pureApp = useAppStoreHook();
   const routers = useRouter().options.routes;
+  const { wholeMenus } = storeToRefs(usePermissionStoreHook());
+  /** 平台`layout`中所有`el-tooltip`的`effect`配置，默认`light` */
+  const tooltipEffect = getConfig()?.TooltipEffect ?? "light";
+
   /** 用户名 */
-  const username: string =
-    storageSession.getItem<StorageConfigs>("info")?.username;
+  const username = computed(() => {
+    return useUserStoreHook()?.username;
+  });
 
   /** 设置国际化选中后的样式 */
   const getDropdownItemStyle = computed(() => {
@@ -40,7 +43,7 @@ export function useNav() {
   });
 
   const avatarsStyle = computed(() => {
-    return username ? { marginRight: "10px" } : "";
+    return username.value ? { marginRight: "10px" } : "";
   });
 
   const isCollapse = computed(() => {
@@ -69,10 +72,7 @@ export function useNav() {
 
   /** 退出登录 */
   function logout() {
-    useMultiTagsStoreHook().handleTags("equal", [...routerArrays]);
-    storageSession.removeItem("info");
-    router.push("/login");
-    resetRouter();
+    useUserStoreHook().logOut();
   }
 
   function backHome() {
@@ -103,6 +103,7 @@ export function useNav() {
   }
 
   function menuSelect(indexPath: string, routers): void {
+    if (wholeMenus.value.length === 0) return;
     if (isRemaining(indexPath)) return;
     let parentPath = "";
     const parentPathIndex = indexPath.lastIndexOf("/");
@@ -136,15 +137,6 @@ export function useNav() {
     return remainingPaths.includes(path);
   }
 
-  /**
-   * 切换wangEditorV5国际化
-   * @param language string 可选值 en、zh-CN
-   * @returns void
-   */
-  function changeWangeditorLanguage(language: string): void {
-    i18nChangeLanguage(language);
-  }
-
   return {
     title,
     device,
@@ -163,8 +155,8 @@ export function useNav() {
     pureApp,
     username,
     avatarsStyle,
+    tooltipEffect,
     getDropdownItemStyle,
-    getDropdownItemClass,
-    changeWangeditorLanguage
+    getDropdownItemClass
   };
 }

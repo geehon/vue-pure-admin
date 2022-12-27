@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import "animate.css";
+// 引入 src/components/ReIcon/src/offlineIcon.ts 文件中所有使用addIcon添加过的本地图标
+import "@/components/ReIcon/src/offlineIcon";
 import { setType } from "./types";
-import { emitter } from "/@/utils/mitt";
+import { emitter } from "@/utils/mitt";
 import { useLayout } from "./hooks/useLayout";
-import { useAppStoreHook } from "/@/store/modules/app";
-import { useSettingStoreHook } from "/@/store/modules/settings";
+import { useAppStoreHook } from "@/store/modules/app";
+import { useSettingStoreHook } from "@/store/modules/settings";
 import { deviceDetection, useDark, useGlobal } from "@pureadmin/utils";
 import { h, reactive, computed, onMounted, defineComponent } from "vue";
 
@@ -13,7 +16,7 @@ import appMain from "./components/appMain.vue";
 import setting from "./components/setting/index.vue";
 import Vertical from "./components/sidebar/vertical.vue";
 import Horizontal from "./components/sidebar/horizontal.vue";
-import backTop from "/@/assets/svg/back_top.svg?component";
+import backTop from "@/assets/svg/back_top.svg?component";
 
 const { isDark } = useDark();
 const { layout } = useLayout();
@@ -70,7 +73,7 @@ let isAutoCloseSidebar = true;
 // 监听容器
 emitter.on("resize", ({ detail }) => {
   if (isMobile) return;
-  let { width } = detail;
+  const { width } = detail;
   width <= 760 ? setTheme("vertical") : setTheme(useAppStoreHook().layout);
   /** width app-wrapper类容器宽度
    * 0 < width <= 760 隐藏侧边栏

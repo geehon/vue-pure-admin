@@ -68,10 +68,6 @@
     }
   }
 
-  .el-popper.is-light {
-    border: none !important;
-  }
-
   .sidebar-container {
     /* 展开动画 */
     transition: width var(--pure-transition-duration);
@@ -233,11 +229,9 @@
       .search-container,
       /* 告警 */
       .dropdown-badge,
-      /* 全屏 */
-      .screen-full,
       /* 国际化 */
       .globalization,
-      /* 登录名 */
+      /* 用户名 */
       .el-dropdown-link,
       /* 设置 */
       .set-icon {
@@ -587,11 +581,9 @@ body[layout="vertical"] {
   .search-container,
   /* 告警 */
   .dropdown-badge,
-  /* 全屏 */
-  .screen-full,
   /* 国际化 */
   .globalization,
-  /* 登录名 */
+  /* 用户名 */
   .el-dropdown-link,
   /* 设置 */
   .set-icon {

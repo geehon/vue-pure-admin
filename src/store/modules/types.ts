@@ -19,6 +19,7 @@ export type appType = {
   };
   layout: string;
   device: string;
+  sortSwap: boolean;
 };
 
 export type multiType = {
@@ -37,8 +38,8 @@ export type setType = {
 };
 
 export type userType = {
-  token: string;
-  name?: string;
+  username?: string;
+  roles?: Array<string>;
   verifyCode?: string;
   currentPage?: number;
 };

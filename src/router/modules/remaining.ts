@@ -1,12 +1,11 @@
-import { $t } from "/@/plugins/i18n";
-import type { RouteConfigsTable } from "/#/index";
-const Layout = () => import("/@/layout/index.vue");
+import { $t } from "@/plugins/i18n";
+const Layout = () => import("@/layout/index.vue");
 
-const remainingRouter: Array<RouteConfigsTable> = [
+export default [
   {
     path: "/login",
     name: "Login",
-    component: () => import("/@/views/login/index.vue"),
+    component: () => import("@/views/login/index.vue"),
     meta: {
       title: $t("menus.hslogin"),
       showLink: false,
@@ -17,16 +16,16 @@ const remainingRouter: Array<RouteConfigsTable> = [
     path: "/redirect",
     component: Layout,
     meta: {
-      icon: "home-filled",
+      icon: "homeFilled",
       title: $t("menus.hshome"),
       showLink: false,
-      rank: 104
+      rank: 102
     },
     children: [
       {
         path: "/redirect/:path(.*)",
         name: "Redirect",
-        component: () => import("/@/layout/redirect.vue")
+        component: () => import("@/layout/redirect.vue")
       }
     ]
   },
@@ -34,13 +33,11 @@ const remainingRouter: Array<RouteConfigsTable> = [
   {
     path: "/empty",
     name: "Empty",
-    component: () => import("/@/views/empty/index.vue"),
+    component: () => import("@/views/empty/index.vue"),
     meta: {
       title: $t("menus.hsempty"),
       showLink: false,
-      rank: 105
+      rank: 103
     }
   }
-];
-
-export default remainingRouter;
+] as Array<RouteConfigsTable>;

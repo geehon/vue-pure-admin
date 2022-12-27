@@ -1,35 +1,47 @@
 <script setup lang="ts">
+import {
+  ref,
+  toRaw,
+  reactive,
+  watch,
+  computed,
+  onMounted,
+  onBeforeUnmount
+} from "vue";
 import { useI18n } from "vue-i18n";
 import Motion from "./utils/motion";
 import { useRouter } from "vue-router";
+import { message } from "@/utils/message";
 import { loginRules } from "./utils/rule";
 import phone from "./components/phone.vue";
+import TypeIt from "@/components/ReTypeit";
 import qrCode from "./components/qrCode.vue";
 import regist from "./components/regist.vue";
 import update from "./components/update.vue";
-import { initRouter } from "/@/router/utils";
-import { useNav } from "/@/layout/hooks/useNav";
-import { message } from "@pureadmin/components";
+import { initRouter } from "@/router/utils";
+import { useNav } from "@/layout/hooks/useNav";
 import type { FormInstance } from "element-plus";
-import { storageSession } from "@pureadmin/utils";
-import { $t, transformI18n } from "/@/plugins/i18n";
-import { ref, reactive, watch, computed } from "vue";
+import { $t, transformI18n } from "@/plugins/i18n";
 import { operates, thirdParty } from "./utils/enums";
-import { useLayout } from "/@/layout/hooks/useLayout";
-import { useUserStoreHook } from "/@/store/modules/user";
-import { bg, avatar, currentWeek } from "./utils/static";
-import { ReImageVerify } from "/@/components/ReImageVerify";
-import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
-import { useTranslationLang } from "/@/layout/hooks/useTranslationLang";
-import { useDataThemeChange } from "/@/layout/hooks/useDataThemeChange";
+import { useLayout } from "@/layout/hooks/useLayout";
+import { useUserStoreHook } from "@/store/modules/user";
+import { bg, avatar, illustration } from "./utils/static";
+import { ReImageVerify } from "@/components/ReImageVerify";
+import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import { useTranslationLang } from "@/layout/hooks/useTranslationLang";
+import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
 
-import dayIcon from "/@/assets/svg/day.svg?component";
-import darkIcon from "/@/assets/svg/dark.svg?component";
-import globalization from "/@/assets/svg/globalization.svg?component";
+import dayIcon from "@/assets/svg/day.svg?component";
+import darkIcon from "@/assets/svg/dark.svg?component";
+import globalization from "@/assets/svg/globalization.svg?component";
+import Lock from "@iconify-icons/ri/lock-fill";
+import Check from "@iconify-icons/ep/check";
+import User from "@iconify-icons/ri/user-3-fill";
 
 defineOptions({
   name: "Login"
 });
+
 const imgCode = ref("");
 const router = useRouter();
 const loading = ref(false);
@@ -39,11 +51,11 @@ const currentPage = computed(() => {
   return useUserStoreHook().currentPage;
 });
 
+const { t } = useI18n();
 const { initStorage } = useLayout();
 initStorage();
-
-const { t } = useI18n();
 const { dataTheme, dataThemeChange } = useDataThemeChange();
+dataThemeChange();
 const { title, getDropdownItemStyle, getDropdownItemClass } = useNav();
 const { locale, translationCh, translationEn } = useTranslationLang();
 
@@ -58,17 +70,17 @@ const onLogin = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
-      // 模拟请求，需根据实际开发进行修改
-      setTimeout(() => {
-        loading.value = false;
-        storageSession.setItem("info", {
-          username: "admin",
-          accessToken: "eyJhbGciOiJIUzUxMiJ9.test"
+      useUserStoreHook()
+        .loginByUsername({ username: ruleForm.username, password: "admin123" })
+        .then(res => {
+          if (res.success) {
+            // 获取后端路由
+            initRouter().then(() => {
+              router.push("/");
+              message("登录成功", { type: "success" });
+            });
+          }
         });
-        initRouter("admin").then(() => {});
-        message.success("登录成功");
-        router.push("/");
-      }, 2000);
     } else {
       loading.value = false;
       return fields;
@@ -76,15 +88,24 @@ const onLogin = async (formEl: FormInstance | undefined) => {
   });
 };
 
-function onHandle(value) {
-  useUserStoreHook().SET_CURRENTPAGE(value);
+/** 使用公共函数，避免`removeEventListener`失效 */
+function onkeypress({ code }: KeyboardEvent) {
+  if (code === "Enter") {
+    onLogin(ruleFormRef.value);
+  }
 }
+
+onMounted(() => {
+  window.document.addEventListener("keypress", onkeypress);
+});
+
+onBeforeUnmount(() => {
+  window.document.removeEventListener("keypress", onkeypress);
+});
 
 watch(imgCode, value => {
   useUserStoreHook().SET_VERIFYCODE(value);
 });
-
-dataThemeChange();
 </script>
 
 <template>
@@ -114,7 +135,7 @@ dataThemeChange();
               <IconifyIconOffline
                 class="check-zh"
                 v-show="locale === 'zh'"
-                icon="check"
+                :icon="Check"
               />
               简体中文
             </el-dropdown-item>
@@ -124,7 +145,7 @@ dataThemeChange();
               @click="translationEn"
             >
               <span class="check-en" v-show="locale === 'en'">
-                <IconifyIconOffline icon="check" />
+                <IconifyIconOffline :icon="Check" />
               </span>
               English
             </el-dropdown-item>
@@ -134,13 +155,15 @@ dataThemeChange();
     </div>
     <div class="login-container">
       <div class="img">
-        <component :is="currentWeek" />
+        <component :is="toRaw(illustration)" />
       </div>
       <div class="login-box">
         <div class="login-form">
           <avatar class="avatar" />
           <Motion>
-            <h2 class="outline-none">{{ title }}</h2>
+            <h2 class="outline-none">
+              <TypeIt :values="[title]" :cursor="false" :speed="150" />
+            </h2>
           </Motion>
 
           <el-form
@@ -149,7 +172,6 @@ dataThemeChange();
             :model="ruleForm"
             :rules="loginRules"
             size="large"
-            @keyup.enter="onLogin(ruleFormRef)"
           >
             <Motion :delay="100">
               <el-form-item
@@ -166,7 +188,7 @@ dataThemeChange();
                   clearable
                   v-model="ruleForm.username"
                   :placeholder="t('login.username')"
-                  :prefix-icon="useRenderIcon('user')"
+                  :prefix-icon="useRenderIcon(User)"
                 />
               </el-form-item>
             </Motion>
@@ -178,7 +200,7 @@ dataThemeChange();
                   show-password
                   v-model="ruleForm.password"
                   :placeholder="t('login.password')"
-                  :prefix-icon="useRenderIcon('lock')"
+                  :prefix-icon="useRenderIcon(Lock)"
                 />
               </el-form-item>
             </Motion>
@@ -189,9 +211,7 @@ dataThemeChange();
                   clearable
                   v-model="ruleForm.verifyCode"
                   :placeholder="t('login.verifyCode')"
-                  :prefix-icon="
-                    useRenderIcon('ri:shield-keyhole-line', { online: true })
-                  "
+                  :prefix-icon="useRenderIcon('ri:shield-keyhole-line')"
                 >
                   <template v-slot:append>
                     <ReImageVerify v-model:code="imgCode" />
@@ -234,7 +254,7 @@ dataThemeChange();
                     :key="index"
                     class="w-full mt-4"
                     size="default"
-                    @click="onHandle(index + 1)"
+                    @click="useUserStoreHook().SET_CURRENTPAGE(index + 1)"
                   >
                     {{ t(item.title) }}
                   </el-button>
@@ -278,7 +298,7 @@ dataThemeChange();
 </template>
 
 <style scoped>
-@import url("/@/style/login.css");
+@import url("@/style/login.css");
 </style>
 
 <style lang="scss" scoped>

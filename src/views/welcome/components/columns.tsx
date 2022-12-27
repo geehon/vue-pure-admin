@@ -1,4 +1,10 @@
-import { IconifyIconOffline } from "/@/components/ReIcon";
+import TypeIt from "@/components/ReTypeit";
+import OfficeBuilding from "@iconify-icons/ep/office-building";
+import Tickets from "@iconify-icons/ep/tickets";
+import Location from "@iconify-icons/ep/location";
+import Iphone from "@iconify-icons/ep/iphone";
+import Notebook from "@iconify-icons/ep/notebook";
+import User from "@iconify-icons/ri/user-3-fill";
 
 export function useColumns() {
   const lists = [
@@ -14,7 +20,7 @@ export function useColumns() {
       labelRenderer: () => (
         <div class="flex items-center">
           <el-icon>
-            <IconifyIconOffline icon="user" />
+            <iconify-icon-offline icon={User} />
           </el-icon>
           用户名
         </div>
@@ -25,7 +31,7 @@ export function useColumns() {
       labelRenderer: () => (
         <div class="flex items-center">
           <el-icon>
-            <IconifyIconOffline icon="iphone" />
+            <iconify-icon-offline icon={Iphone} />
           </el-icon>
           手机号
         </div>
@@ -36,12 +42,12 @@ export function useColumns() {
       labelRenderer: () => (
         <div class="flex items-center">
           <el-icon>
-            <IconifyIconOffline icon="location" />
+            <iconify-icon-offline icon={Location} />
           </el-icon>
           居住地
         </div>
       ),
-      value: "上海"
+      value: "杭州"
     }
   ];
 
@@ -50,7 +56,7 @@ export function useColumns() {
       labelRenderer: () => (
         <div class="flex items-center">
           <el-icon>
-            <IconifyIconOffline icon="tickets" />
+            <iconify-icon-offline icon={Tickets} />
           </el-icon>
           标签
         </div>
@@ -69,12 +75,12 @@ export function useColumns() {
       labelRenderer: () => (
         <div class="flex items-center">
           <el-icon>
-            <IconifyIconOffline icon="office-building" />
+            <iconify-icon-offline icon={OfficeBuilding} />
           </el-icon>
           联系地址
         </div>
       ),
-      value: "上海市徐汇区"
+      value: "杭州市西湖区"
     }
   ];
 
@@ -83,12 +89,19 @@ export function useColumns() {
       labelRenderer: () => (
         <div class="flex items-center">
           <el-icon>
-            <IconifyIconOffline icon="notebook" />
+            <iconify-icon-offline icon={Notebook} />
           </el-icon>
           好好学习，天天向上
         </div>
       ),
-      value: "上海市徐汇区"
+      cellRenderer: () => (
+        <TypeIt
+          className={"github"}
+          values={["Coding as art. Keep open source. Enjoy open source."]}
+          cursor={false}
+          speed={40}
+        />
+      )
     }
   ];
 
